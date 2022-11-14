@@ -12,7 +12,7 @@ app.use(compression());
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.send('Hello world!');
+  res.send('Hellosss world');
 });
 
 app.use('/user', (req, res, next) => {
