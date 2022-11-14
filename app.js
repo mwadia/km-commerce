@@ -1,4 +1,5 @@
 const express = require('express');
+const router = require('./router');
 const app = express();
 const compression = require('compression');
 require('dotenv').config();
@@ -11,17 +12,5 @@ app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Hellosss world');
-});
-
-app.use('/user', (req, res, next) => {
-  if (req.user) {
-    res.json(req.user);
-  } else {
-    res.json({ msg: 'user is not' });
-  }
-  next();
-});
-
+app.use(router);
 module.exports = app;
