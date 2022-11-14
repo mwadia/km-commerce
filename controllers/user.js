@@ -49,15 +49,14 @@ const signIn = async (req, res) => {
 };
 
 const editUser=async (req,res)=>{
-  const {id, name, email, password, userImg,newPassword } = req.body;
-  // const {id}=req.user
+  const {name, email, password, userImg,newPassword } = req.body;
+  const {id}=req.user
   const isPassword=await User.findOne({attributes:['password'], where:{id}})
   const ComperePassword = await bcrypt.compare(password,isPassword.password);
   if(ComperePassword){
     let hashPassword
     if(newPassword){
        hashPassword = await bcrypt.hash(newPassword, 12);
-
     }
      await User.update({name, email, password:hashPassword||isPassword.password, userImg},{where:{id}})
      jwtFun(

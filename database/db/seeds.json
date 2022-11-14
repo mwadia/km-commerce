@@ -1,16 +1,12 @@
 {
   "Animal": [
     {
-      "name": "All"
-    },
-    {
-      "name": "Cat"
-    },
-    {
-      "name": "Dog"
-    },
-    {
-      "name": "Turtle"
+      "name": "All",
+      "price": 50,
+      "count": 5,
+      "productImg": "aa",
+      "UserId": 1,
+      "category": "mobile"
     }
   ],
   "User": [

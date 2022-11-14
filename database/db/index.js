@@ -1,8 +1,10 @@
 const sequelize = require('./connection');
-const { product, User } = require('../../modules');
+const { Product, User } = require('../../modules');
 
+User.hasMany(Product);
+Product.belongsTo(User);
 module.exports = {
   sequelize,
-  product,
+  Product,
   User,
 };

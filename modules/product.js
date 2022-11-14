@@ -1,8 +1,9 @@
 const sequelize = require('../database/db/connection');
 const { Model, CreationOptional, DataTypes } = require('sequelize');
 
-class product extends Model {}
-product.init(
+class Product extends Model {
+}
+Product.init(
   {
     id: {
       primaryKey: true,
@@ -13,10 +14,25 @@ product.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    count: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    productImg: {
+      type: DataTypes.STRING,
+    },
+    category:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   },
   {
     sequelize,
   }
 );
 
-module.exports = product;
+module.exports = Product;
