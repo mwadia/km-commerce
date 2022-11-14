@@ -1,0 +1,24 @@
+{
+  "Animal": [
+    {
+      "name": "All"
+    },
+    {
+      "name": "Cat"
+    },
+    {
+      "name": "Dog"
+    },
+    {
+      "name": "Turtle"
+    }
+  ],
+  "User": [
+    {
+      "name": "All",
+      "email": "aa",
+      "password": "aa",
+      "userImg": "aa"
+    }
+  ]
+}
