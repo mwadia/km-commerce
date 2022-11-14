@@ -6,7 +6,7 @@ const jwtFun = (info, res) => {
       console.log(err);
     } else {
       res.cookie('token', data);
-      res.send('hkyhkh');
+      res.json({msg:'success!!',data:info});
     }
   });
 };
