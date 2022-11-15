@@ -7,7 +7,6 @@ tinify.key = process.env.TINIFY_KEY;
 
 const reduceSize = (req, res, next) => {
   if(req.file){
-
     const imgName = req.file.filename;
   //? to create the uploads folder if not exist
   const imgDir = join(

@@ -1,8 +1,7 @@
-import { Box } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
 
-function UploadImgBtn() {
+function UploadImgBtn({setImgFile}) {
   return (
     <Stack width='100%'>
       <label
@@ -18,7 +17,7 @@ function UploadImgBtn() {
         Upload image
       </label>
 
-      <input id='updateImg' style={{ display: 'none' }} type='file' name='' />
+      <input id='updateImg' style={{ display: 'none' }} type='file' name='' onChange={e=>setImgFile(e.target.files[0])} />
     </Stack>
   );
 }

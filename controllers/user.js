@@ -2,7 +2,8 @@ const { User } = require('../database/db');
 const { jwtFun } = require('../middleware/jwt');
 const bcrypt = require('bcryptjs');
 const storeUser = async (req, res) => {
-  const { name, email, password, userImg } = req.body;
+  const {name,email,password}=JSON.parse(req.body.data)
+const userImg=req.fileUrl
   const isUser = await User.findOne({
     attributes: ['email'],
     where: { email: email },
@@ -16,6 +17,7 @@ const storeUser = async (req, res) => {
       email,
       password: hashPassword,
       userImg,
+      mony:5000
     });
     jwtFun(
       { name: newUser.name, id: newUser.id, userImg: newUser.userImg },
@@ -49,6 +51,7 @@ const signIn = async (req, res) => {
 };
 
 const editUser=async (req,res)=>{
+  
   const {name, email, password, userImg,newPassword } = req.body;
   const {id}=req.user
   const isPassword=await User.findOne({attributes:['password'], where:{id}})
