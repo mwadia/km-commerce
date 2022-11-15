@@ -1,13 +1,19 @@
 const userCtrl = require('../controllers/user');
 const products=require('../controllers/products')
+const cart=require('../controllers/cart')
 const router = require('express').Router();
-
+const isAuth =require('../middleware/auth')
 router.post('/signup', userCtrl.storeUser);
 router.post('/signin', userCtrl.signIn);
-router.put('/edituser', userCtrl.editUser);
+router.put('/edituser',isAuth,userCtrl.editUser);
 router.get('/allproduct',products.getProduct)
-router.post('/addnewproduct',products.addNewProduct)
-router.put('/editproduct/:id',products.editProduct)
-router.delete('/destroyproduct/:id',products.dstroyProduct)
+router.post('/addnewproduct',isAuth,products.addNewProduct)
+router.put('/editproduct/:id',isAuth,products.editProduct)
+router.delete('/destroyproduct/:id',isAuth,products.dstroyProduct)
+router.post('/addproducttocart',isAuth,cart.addProductToCart)
+router.get('/getcartproduct',isAuth,cart.getPrductsCart)
+router.delete('/destroyoneproductcart/:id',isAuth,cart.destroyOneProductInCart)
+router.delete('/destroyallproductcart/:id',isAuth,cart.destroyAllProductsInCart)
+router.put('/buyproducts',isAuth, cart.buyProducts);
 
 module.exports = router;
