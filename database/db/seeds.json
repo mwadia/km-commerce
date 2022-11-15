@@ -2,19 +2,54 @@
   "Animal": [
     {
       "name": "All",
-      "price": 50,
+      "price": 20,
       "count": 5,
       "productImg": "aa",
       "UserId": 1,
       "category": "mobile"
+    },
+    {
+      "name": "All",
+      "price": 50,
+      "count": 5,
+      "productImg": "aa",
+      "UserId": 2,
+      "category": "mobile"
+    }
+  ],
+  "Cart": [
+    {
+      "UserId": 1,
+      "ProductId": 1,
+      "count": 5
+    },
+    {
+      "UserId": 1,
+      "ProductId": 2,
+      "count": 6
     }
   ],
   "User": [
     {
-      "name": "All",
+      "name": "1",
       "email": "aa",
       "password": "aa",
-      "userImg": "aa"
+      "userImg": "aa",
+      "mony": 5000
+    },
+    {
+      "name": "2",
+      "email": "aa",
+      "password": "aa",
+      "userImg": "aa",
+      "mony": 5000
+    },
+    {
+      "name": "3",
+      "email": "aa",
+      "password": "aa",
+      "userImg": "aa",
+      "mony": 5000
     }
   ]
 }

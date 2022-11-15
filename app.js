@@ -1,5 +1,6 @@
 const express = require('express');
 const router = require('./router');
+const {auth}=require('./middleware/jwt')
 const app = express();
 const compression = require('compression');
 require('dotenv').config();
@@ -11,6 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
-
+app.use(auth)
 app.use(router);
 module.exports = app;

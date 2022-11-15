@@ -24,6 +24,10 @@ User.init(
     userImg: {
       type: DataTypes.STRING,
     },
+    mony: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     sequelize,
