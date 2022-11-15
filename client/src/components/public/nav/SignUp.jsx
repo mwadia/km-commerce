@@ -10,7 +10,11 @@ import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
 import UploadImgBtn from './UploadImgBtn';
 import { useState } from 'react';
+import Axios from 'axios'
+import { useContext } from 'react';
+import { Store } from '../../Storage';
 function SignUp() {
+  const {setUser}=useContext(Store)
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -22,6 +26,7 @@ function SignUp() {
   const [signUp,setSignUp]=useState({
     name:'',email:'',password:'',userImg:''
   })
+  const [imgFile,setImgFile]=useState('')
 
  
 
@@ -34,10 +39,23 @@ function SignUp() {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+   
   };
 const handelSignUp=(e)=>{
   e.preventDefault()
-  console.log(signUp);
+  const newData= new FormData()
+  newData.append('file',imgFile)
+  newData.append('data',JSON.stringify(signUp))
+  Axios(  {
+    method: "post",
+    url: "/signup",
+    data: newData,
+    headers: { "Content-Type": "multipart/form-data" },
+  }).then(isExist=>{
+    if(isExist.data.msg){
+      setUser(isExist.data.data)
+    }
+  })
 }
   return (
     <form onSubmit={handelSignUp}>
@@ -102,7 +120,7 @@ const handelSignUp=(e)=>{
             }
           />
         </FormControl>
-        <UploadImgBtn />
+        <UploadImgBtn setImgFile={setImgFile}/>
         <SignInBtn content='sign up' />
       </Stack>
     </form>
