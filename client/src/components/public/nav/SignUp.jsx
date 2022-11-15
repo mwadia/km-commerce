@@ -20,7 +20,7 @@ function SignUp() {
   });
 
   const [signUp,setSignUp]=useState({
-    name:'www',email:'',password:'',userImg:''
+    name:'',email:'',password:'',userImg:''
   })
 
  
@@ -88,6 +88,7 @@ const handelSignUp=(e)=>{
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
+            onChange={e=>setValues({...values,password:e.target.value})}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
