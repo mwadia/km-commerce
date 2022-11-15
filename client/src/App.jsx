@@ -1,26 +1,15 @@
-import React from 'react'
-import { useEffect } from 'react'
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
-
-import Storage from './components/Storage'
-import axios from 'axios'
+import React from 'react';
+import LandingPage from './pages/LandingPage';
+import Footer from './components/public/footer';
+import { Stack } from '@mui/system';
 
 function App() {
-
-  useEffect(()=>{
-    axios('/user').then(res=>console.log(res.data))
-  },[])
-
-
-  return <div className="App">
-    <Storage>
-    <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-    </Routes>
-<h1>hallo world</h1>
-    </Storage>
-  </div>
+  return (
+    <Stack justifyContent='space-between' gap='100px'>
+      <LandingPage />
+      <Footer />
+    </Stack>
+  );
 }
 
-export default App
+export default App;
