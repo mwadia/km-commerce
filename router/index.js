@@ -3,7 +3,8 @@ const products=require('../controllers/products')
 const cart=require('../controllers/cart')
 const router = require('express').Router();
 const isAuth =require('../middleware/auth')
-router.post('/signup', userCtrl.storeUser);
+const {  uploadFile,reduceSize,cloudUpload}=require('../middleware/upbloudImg')
+router.post('/signup',uploadFile().single('file'),reduceSize,cloudUpload ,userCtrl.storeUser);
 router.post('/signin', userCtrl.signIn);
 router.put('/edituser',isAuth,userCtrl.editUser);
 router.get('/allproduct',products.getProduct)

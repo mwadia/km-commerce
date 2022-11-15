@@ -46,11 +46,11 @@ function index() {
         >
           <Stack direction='row' alignItems='start' gap='5px'>
             <GitHubIcon sx={{ fontSize: '18px', color: '#3d4526' }} />
-            <box>
+            <Box>
               <Typography variant='caption' gutterBottom>
                 Mohammed Alshorafa
               </Typography>
-            </box>
+            </Box>
           </Stack>
         </a>
         <Stack direction='row' alignItems='start' gap='5px'>
@@ -67,8 +67,8 @@ function index() {
             Mohmmed AlWadia & Mohmmed AlShorafa
           </Typography>
         </Box>
-      </Stack>
-      <img style={{ maxWidth: '120px' }} src='./saas/logo.png' />
+      </Stack> 
+       <img style={{ maxWidth: '120px' }} src='./saas/logo.png' />
     </Stack>
   );
 }

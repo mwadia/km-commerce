@@ -9,6 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
 import UploadImgBtn from './UploadImgBtn';
+import { useState } from 'react';
 function SignUp() {
   const [values, setValues] = React.useState({
     amount: '',
@@ -18,9 +19,11 @@ function SignUp() {
     showPassword: false,
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const [signUp,setSignUp]=useState({
+    name:'www',email:'',password:'',userImg:''
+  })
+
+ 
 
   const handleClickShowPassword = () => {
     setValues({
@@ -32,31 +35,38 @@ function SignUp() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+const handelSignUp=(e)=>{
+  e.preventDefault()
+  console.log(signUp);
+}
   return (
-    <form>
+    <form onSubmit={handelSignUp}>
       <Stack alignItems='center'>
         <TextField
           sx={{ width: '95%' }}
           id='input-with-icon-textfield'
           label='Name'
           variant='standard'
+          value={signUp.name}
+          onChange={e=>setSignUp({...signUp,name:e.target.value})}
         />
         <TextField
           sx={{ width: '95%' }}
           id='input-with-icon-textfield'
           label='Email'
           variant='standard'
+          value={signUp.email}
+          onChange={e=>setSignUp({...signUp,email:e.target.value})}
         />
         <FormControl sx={{ m: 1, width: '97%' }} variant='standard'>
           <InputLabel htmlFor='standard-adornment-password'>
             Password
           </InputLabel>
           <Input
+           value={signUp.password}
+           onChange={e=>setSignUp({...signUp,password:e.target.value})}
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
@@ -78,7 +88,6 @@ function SignUp() {
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
-            onChange={handleChange('password')}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
