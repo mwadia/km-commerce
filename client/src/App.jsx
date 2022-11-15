@@ -5,11 +5,12 @@ import { Stack } from '@mui/system';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Nav from './components/public/nav';
-
+import Storage from './components/Storage';
 function App() {
   const [showNav, setShowNav] = useState(false);
 
   return (
+    <Storage>
     <Stack minHeight='100vh' justifyContent='space-between' gap='100px'>
       {showNav && <Nav />}
       <Routes>
@@ -18,6 +19,8 @@ function App() {
       </Routes>
       <Footer />
     </Stack>
+    </Storage>
+
   );
 }
 
