@@ -5,17 +5,22 @@ import Stack from '@mui/material/Stack';
 import { purple } from '@mui/material/colors';
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(purple[500]),
-  backgroundColor: purple[500],
+  color: '#2d3024',
+  backgroundColor: '#f0e9dd',
   '&:hover': {
-    backgroundColor: purple[700],
+    backgroundColor: '#fcf9f4',
   },
 }));
 
-export default function LabelUpDateImg() {
+export default function ShowSginBtn({ handleClickOpen, contain, stateSign }) {
   return (
     <Stack direction='row'>
-      <ColorButton variant='contained'>Upload Image</ColorButton>
+      <ColorButton
+        onClick={() => handleClickOpen(stateSign)}
+        variant='contained'
+      >
+        {contain}
+      </ColorButton>
     </Stack>
   );
 }

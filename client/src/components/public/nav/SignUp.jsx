@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 
 import { Store } from '../../Storage';
 function SignUp({ setLoading }) {
-  const { setUser } = useContext(Store);
+  const { setUser, setOpen } = useContext(Store);
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -58,7 +58,8 @@ function SignUp({ setLoading }) {
       setLoading(false);
       if (isExist.data.data) {
         setUser(isExist.data.data);
-        toast.success(isExist.data.msg)
+        toast.success(isExist.data.msg);
+        setOpen(false);
       } else {
         toast.error(isExist.data.msg);
       }

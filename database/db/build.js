@@ -1,4 +1,4 @@
-const { sequelize, Product, User,Cart } = require('./index');
+const { sequelize, Product, User, Cart } = require('./index');
 const environment = require('../config/enviroment');
 const data = require('./seeds.json');
 

@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 import { Store } from '../../Storage';
 function SignIn({ setLoading }) {
-  const { setUser } = useContext(Store);
+  const { setUser, setOpen } = useContext(Store);
   const [signin, setSignIn] = useState({
     email: '',
     password: '',
@@ -36,6 +36,7 @@ function SignIn({ setLoading }) {
       if (res.data.data) {
         setUser(res.data.data);
         toast.success(res.data.msg);
+        setOpen(false);
       } else {
         toast.error(res.data.msg);
       }

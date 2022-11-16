@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +17,7 @@ import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -65,7 +64,7 @@ export default function PrimarySearchAppBar() {
   const { user } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const { filter, SetFilter } = React.useContext(Store);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,7 +81,9 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const handelSarech = (e) => {
+    SetFilter({ ...filter, q: e.target.value });
+  };
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -125,7 +126,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
           <Badge badgeContent={4} color='error'>
-            <MailIcon />
+            <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
@@ -185,6 +186,8 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder='Search…'
               inputProps={{ 'aria-label': 'search' }}
+              value={filter.q}
+              onChange={handelSarech}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
@@ -197,7 +200,7 @@ export default function PrimarySearchAppBar() {
                   color='inherit'
                 >
                   <Badge badgeContent={4} color='error'>
-                    <MailIcon />
+                    <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
                 <IconButton

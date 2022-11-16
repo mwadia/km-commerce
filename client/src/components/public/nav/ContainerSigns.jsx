@@ -4,10 +4,10 @@ import TabSigns from './TabSigns';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from 'react';
 
-function ContainerSigns() {
+function ContainerSigns({ value, setValue }) {
   const [loadingSign, setLoadingSign] = useState(false);
   return (
-    <Container maxWidth='sm' sx={{ position: 'relative' }}>
+    <Container maxWidth='sm' sx={{ position: 'relative', background:'#fdfeff', padding:'20px 0 40px 0'  }}>
       {loadingSign && (
         <Box
           position='absolute'
@@ -25,7 +25,11 @@ function ContainerSigns() {
         </Box>
       )}
       <Stack>
-        <TabSigns setLoading={setLoadingSign} />
+        <TabSigns
+          setValue={setValue}
+          value={value}
+          setLoading={setLoadingSign}
+        />
       </Stack>
     </Container>
   );

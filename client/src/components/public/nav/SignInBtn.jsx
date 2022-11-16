@@ -5,17 +5,21 @@ import Stack from '@mui/material/Stack';
 import { purple } from '@mui/material/colors';
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(purple[500]),
-  backgroundColor: purple[500],
+  color: '#22271d',
+  width: '100%',
+  boxShadow: 'none',
+  marginTop: '10px',
+  backgroundColor: '#f0eade',
   '&:hover': {
-    backgroundColor: purple[700],
+    backgroundColor: '#fff9ec',
+    boxShadow: 'none',
   },
 }));
 
 export default function SignInBtn({ content }) {
   return (
-    <Stack spacing={2} direction='row'>
-      <ColorButton type='submit' variant='contained'>
+    <Stack width='100%' direction='row'>
+      <ColorButton width='' type='submit' variant='contained'>
         {content}
       </ColorButton>
     </Stack>
