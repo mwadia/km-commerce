@@ -2,10 +2,10 @@ import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import { Stack } from '@mui/material';
 
-function AvatarNav() {
+function AvatarNav({user}) {
   return (
     <Stack>
-      <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
+      <Avatar alt={user.name} src={user.userImg} />
     </Stack>
   );
 }

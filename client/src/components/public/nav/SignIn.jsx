@@ -8,15 +8,18 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
-import Axios from 'axios'
+import Axios from 'axios';
 import { useState } from 'react';
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
+
 import { Store } from '../../Storage';
-function SignIn() {
-  const {setUser}=useContext(Store)
-  const [signin,setSignIn]=useState({
-    email:'',password:''
-  })
+function SignIn({ setLoading }) {
+  const { setUser } = useContext(Store);
+  const [signin, setSignIn] = useState({
+    email: '',
+    password: '',
+  });
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -25,11 +28,19 @@ function SignIn() {
     showPassword: false,
   });
 
-  const handelSignIn=(e)=>{
-e.preventDefault()
-Axios.post('/signin',signin).then(res=>setUser(res.data.data))
-
-  }
+  const handelSignIn = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    Axios.post('/signin', signin).then((res) => {
+      setLoading(false);
+      if (res.data.data) {
+        setUser(res.data.data);
+        toast.success(res.data.msg);
+      } else {
+        toast.error(res.data.msg);
+      }
+    });
+  };
 
   const handleClickShowPassword = () => {
     setValues({
@@ -51,7 +62,7 @@ Axios.post('/signin',signin).then(res=>setUser(res.data.data))
           label='Email'
           variant='standard'
           value={signin.email}
-          onChange={e=>setSignIn({...signin,email:e.target.value})}
+          onChange={(e) => setSignIn({ ...signin, email: e.target.value })}
         />
         <FormControl sx={{ m: 1, width: '97%' }} variant='standard'>
           <InputLabel htmlFor='standard-adornment-password'>
@@ -61,7 +72,7 @@ Axios.post('/signin',signin).then(res=>setUser(res.data.data))
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
             value={signin.password}
-            onChange={e=>setSignIn({...signin,password:e.target.value})}
+            onChange={(e) => setSignIn({ ...signin, password: e.target.value })}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton

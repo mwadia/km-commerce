@@ -17,6 +17,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
+import { Store } from '../../Storage';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,8 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const user = false;
-
+  const { user } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -181,14 +181,14 @@ export default function PrimarySearchAppBar() {
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
-            </SearchIconWrapper> 
-             <StyledInputBase
+            </SearchIconWrapper>
+            <StyledInputBase
               placeholder='Search…'
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-           {user && (
+          {user && (
             <Box>
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton
@@ -198,8 +198,8 @@ export default function PrimarySearchAppBar() {
                 >
                   <Badge badgeContent={4} color='error'>
                     <MailIcon />
-                  </Badge> 
-                 </IconButton> 
+                  </Badge>
+                </IconButton>
                 <IconButton
                   size='large'
                   aria-label='show 17 new notifications'
@@ -208,19 +208,19 @@ export default function PrimarySearchAppBar() {
                   <Badge badgeContent={17} color='error'>
                     <NotificationsIcon />
                   </Badge>
-                </IconButton> 
-                 <IconButton 
-                   size='large'
+                </IconButton>
+                <IconButton
+                  size='large'
                   edge='end'
                   aria-label='account of current user'
                   aria-controls={menuId}
                   aria-haspopup='true'
                   onClick={handleProfileMenuOpen}
                   color='inherit'
-                > 
-                 <AvatarNav />
+                >
+                  <AvatarNav user={user} />
                 </IconButton>
-              </Box> 
+              </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
                   size='large'
@@ -232,10 +232,10 @@ export default function PrimarySearchAppBar() {
                 >
                   <MoreIcon />
                 </IconButton>
-              </Box> 
-             </Box>
-          )} 
-           {!user && <SignForms />} 
+              </Box>
+            </Box>
+          )}
+          {!user && <SignForms />}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
