@@ -3,7 +3,6 @@ import React from 'react';
 import Product from './Product';
 
 function Products({ products }) {
-  console.log(products);
   return (
     <Container maxWidth='lg'>
       <Stack direction='row' flexWrap='wrap' gap='20px' justifyContent='center'>

@@ -12,11 +12,10 @@ Axios.get('/user').then(res=>{
   }
 })
 },[])
-console.log(user);
 
   return (
     <div>
-      <Store.Provider value={{setUser}}>
+      <Store.Provider value={{setUser,user}}>
       {props.children}
       </Store.Provider>
       

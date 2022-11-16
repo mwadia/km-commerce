@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
-export default function TabSigns() {
+export default function TabSigns({setLoading}) {
   const [value, setValue] = React.useState(0);
 
   return (
@@ -29,10 +29,10 @@ export default function TabSigns() {
         </Tabs>
       </Box>
       {value===0 &&   <Box >
-      <SignUp />
+      <SignUp setLoading={setLoading}/>
       </Box>}
       {value===1 &&   <Box >
-      <SignIn />
+      <SignIn setLoading={setLoading} />
       </Box>}
      
     </Box>

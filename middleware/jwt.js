@@ -6,7 +6,7 @@ const jwtFun = (info, res) => {
       console.log(err);
     } else {
       res.cookie('token', data);
-      res.json({msg:'success!!',data:info});
+      res.json({ msg: 'success!!', data: info });
     }
   });
 };
@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
       req.user = {
         name: data.name,
         id: data.id,
-        img: data.userImg,
+        userImg: data.userImg,
       };
     }
 

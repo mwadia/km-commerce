@@ -1,4 +1,4 @@
-import { IconButton, Stack } from '@mui/material';
+import { Box, IconButton, Stack } from '@mui/material';
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -10,11 +10,13 @@ import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
 import UploadImgBtn from './UploadImgBtn';
 import { useState } from 'react';
-import Axios from 'axios'
+import Axios from 'axios';
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
+
 import { Store } from '../../Storage';
-function SignUp() {
-  const {setUser}=useContext(Store)
+function SignUp({ setLoading }) {
+  const { setUser } = useContext(Store);
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -23,12 +25,13 @@ function SignUp() {
     showPassword: false,
   });
 
-  const [signUp,setSignUp]=useState({
-    name:'',email:'',password:'',userImg:''
-  })
-  const [imgFile,setImgFile]=useState('')
-
- 
+  const [signUp, setSignUp] = useState({
+    name: '',
+    email: '',
+    password: '',
+    userImg: '',
+  });
+  const [imgFile, setImgFile] = useState('');
 
   const handleClickShowPassword = () => {
     setValues({
@@ -39,24 +42,29 @@ function SignUp() {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-   
   };
-const handelSignUp=(e)=>{
-  e.preventDefault()
-  const newData= new FormData()
-  newData.append('file',imgFile)
-  newData.append('data',JSON.stringify(signUp))
-  Axios(  {
-    method: "post",
-    url: "/signup",
-    data: newData,
-    headers: { "Content-Type": "multipart/form-data" },
-  }).then(isExist=>{
-    if(isExist.data.msg){
-      setUser(isExist.data.data)
-    }
-  })
-}
+  const handelSignUp = (e) => {
+    e.preventDefault();
+    const newData = new FormData();
+    newData.append('file', imgFile);
+    newData.append('data', JSON.stringify(signUp));
+    setLoading(true);
+    Axios({
+      method: 'post',
+      url: '/signup',
+      data: newData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((isExist) => {
+      setLoading(false);
+      if (isExist.data.data) {
+        setUser(isExist.data.data);
+        toast.success(isExist.data.msg)
+      } else {
+        toast.error(isExist.data.msg);
+      }
+    });
+  };
+
   return (
     <form onSubmit={handelSignUp}>
       <Stack alignItems='center'>
@@ -66,7 +74,7 @@ const handelSignUp=(e)=>{
           label='Name'
           variant='standard'
           value={signUp.name}
-          onChange={e=>setSignUp({...signUp,name:e.target.value})}
+          onChange={(e) => setSignUp({ ...signUp, name: e.target.value })}
         />
         <TextField
           sx={{ width: '95%' }}
@@ -74,15 +82,15 @@ const handelSignUp=(e)=>{
           label='Email'
           variant='standard'
           value={signUp.email}
-          onChange={e=>setSignUp({...signUp,email:e.target.value})}
+          onChange={(e) => setSignUp({ ...signUp, email: e.target.value })}
         />
         <FormControl sx={{ m: 1, width: '97%' }} variant='standard'>
           <InputLabel htmlFor='standard-adornment-password'>
             Password
           </InputLabel>
           <Input
-           value={signUp.password}
-           onChange={e=>setSignUp({...signUp,password:e.target.value})}
+            value={signUp.password}
+            onChange={(e) => setSignUp({ ...signUp, password: e.target.value })}
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
             endAdornment={
@@ -106,7 +114,7 @@ const handelSignUp=(e)=>{
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
-            onChange={e=>setValues({...values,password:e.target.value})}
+            onChange={(e) => setValues({ ...values, password: e.target.value })}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
@@ -120,7 +128,7 @@ const handelSignUp=(e)=>{
             }
           />
         </FormControl>
-        <UploadImgBtn setImgFile={setImgFile}/>
+        <UploadImgBtn setImgFile={setImgFile} />
         <SignInBtn content='sign up' />
       </Stack>
     </form>
