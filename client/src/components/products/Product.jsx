@@ -6,8 +6,6 @@ import Typography from '@mui/material/Typography';
 import {
   Box,
   CardActionArea,
-  Container,
-  IconButton,
   Stack,
 } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -17,6 +15,7 @@ import { Store } from '../Storage';
 import { useState } from 'react';
 import Axios from 'axios';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function Product({ item }) {
   const { id, name, price, count, productImg } = item;
@@ -26,14 +25,18 @@ export default function Product({ item }) {
   useEffect(() => {
     if (cartProduct.some((e) => e.ProductId === id)) {
       SetIsCart(true);
+    }else{
+      SetIsCart(false);
+
     }
   }, [cartProduct, openCart]);
   const handelAddtoCart = () => {
     if (isCart) {
-      Axios.delete(`/destroyoneproductcart/${id}`);
+      Axios.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
+      );
       SetCountCart(countCart - 1);
     } else {
-      Axios.post('/addproducttocart', { ProductId: id });
+      Axios.post('/addproducttocart', { ProductId: id }).then(res=>toast.success(res.data.msg));
       SetCountCart(countCart + 1);
     }
     SetIsCart(!isCart);

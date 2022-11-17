@@ -9,6 +9,7 @@ function Storage(props) {
   const [cartProduct, setCartProduct] = useState([]);
   const [countCart, SetCountCart] = useState(0);
   const [openCart, setOpenCart] = React.useState(false);
+  const [total,setTotal]=useState(0)
 
   const [filter, SetFilter] = useState({
     q: '',
@@ -26,6 +27,8 @@ function Storage(props) {
       Axios('/getcartproduct').then((res) => {
         setCartProduct(res.data.data);
         SetCountCart(res.data.data.length);
+          setTotal(res.data.data.reduce((a,b)=>
+            a +b.Product.price,0))
       });
     }
   }, [user, openCart]);
@@ -45,6 +48,7 @@ function Storage(props) {
           SetCountCart,
           openCart,
           setOpenCart,
+          total,setTotal
         }}
       >
         {props.children}

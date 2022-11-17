@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import { Store } from '../components/Storage';
 function Home({ setShowNav }) {
   const [products, setProducts] = useState([]);
-  const { filter, user } = useContext(Store);
+  const { filter, user ,openCart} = useContext(Store);
 
   useEffect(() => {
     setShowNav(true);
@@ -18,7 +18,7 @@ function Home({ setShowNav }) {
     const { q, c } = filter;
 
     Axios.get(`/allproduct?q=${q}&c=${c}`).then((res) => setProducts(res.data));
-  }, [filter]);
+  }, [filter,openCart]);
 
   return (
     <Stack alignItems='center' gap='20px'>
