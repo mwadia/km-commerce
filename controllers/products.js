@@ -46,7 +46,9 @@ q=''
 
     }}
   }
-const allProducts=await Product.findAll({where:filterProducts})
+const allProducts=await Product.findAll({where:filterProducts,order: [
+  ['id', 'ASC'],
+]})
   res.json(allProducts)
 }
 const addNewProduct=async(req,res)=>{

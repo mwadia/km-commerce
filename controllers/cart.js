@@ -10,7 +10,9 @@ const getPrductsCart = async (req, res) => {
             include: [{ model: User, attributes: ['id', 'name', 'userImg'] }],
           },
         ],
-        where: { UserId: id },
+        where: { UserId: id },order: [
+          ['id', 'ASC'],
+      ]
       });
       res.json({ data: productsCart });
     } catch (err) {
