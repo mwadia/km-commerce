@@ -51,7 +51,8 @@ const destroyOneProductInCart = async (req, res) => {
 };
 const destroyAllProductsInCart = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.user;
+    
     await Cart.destroy({
       where: { UserId: id },
     });
@@ -66,7 +67,7 @@ const destroyAllProductsInCart = async (req, res) => {
 const buyProducts = async (req, res) => {
   try {
     const { total } = req.body;
-    const userCount = await User.findOne({ where: { id: 1 } });
+    const userCount = await User.findOne({ where: { id: req.user.id } });
     let userMony = userCount.mony;
     if (userMony < total) {
       res.json({
@@ -77,7 +78,7 @@ const buyProducts = async (req, res) => {
 
       const products = await Cart.findAll({ where: { UserId: req.user.id } });
       for (let i = 0; i < products.length; i++) {
-        const prct = await Product.findOne({ where: { id: products[i].id } });
+        const prct = await Product.findOne({ where: { id: products[i].ProductId } });
         if (prct.count < products[i].count) {
           arrMsg.push({
             msg: `The quantity of ${prct.name} is only ${products[i].count}, do you want this quantity?`,
@@ -97,7 +98,8 @@ const buyProducts = async (req, res) => {
               { where: { id: prct.id } }
             );
           }
-
+          await Cart.destroy({
+            where: { id: products[i].id },})
           arrMsg.push({
             msg: `The  ${prct.name} has been successfully purchased`,
           });
@@ -112,10 +114,30 @@ const buyProducts = async (req, res) => {
     });
   }
 };
+const putCountProduct=async(req,res)=>{
+  try{
+    await Cart.update(
+      {
+        count: req.body.newCount,
+      },
+      { where: { id: req.params.id } }
+    );
+    res.json({msg:'succuss!'})
+  }
+  catch (err) {
+    res.status(400).json({
+      msg: 'something went wrong',
+      err,
+    });
+  }
+
+  
+}
 module.exports = {
   addProductToCart,
   getPrductsCart,
   destroyOneProductInCart,
   destroyAllProductsInCart,
   buyProducts,
+  putCountProduct
 };

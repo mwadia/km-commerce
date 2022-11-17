@@ -29,10 +29,9 @@ router.delete(
   cart.destroyOneProductInCart
 );
 router.delete(
-  '/destroyallproductcart/:id',
-  isAuth,
+  '/destroyallproductcart',
   cart.destroyAllProductsInCart
 );
-router.put('/buyproducts', isAuth, cart.buyProducts);
-
+router.put('/buyproducts', cart.buyProducts);
+router.put('/putcountproduct/:id',cart.putCountProduct)
 module.exports = router;

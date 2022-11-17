@@ -24,13 +24,12 @@ export default function TestCart({ item }) {
     setCountCart(countCart+1)
     Axios.put(`/putcountproduct/${item.id}`,{
       newCount:countCart+1
-    }).then(res=>console.log(res))
+    })
     setTotal(total+price)
   }
   const handelRemove=()=>{
     setCountCart(countCart-1)
     setTotal(total-price)
-    console.log(item.id);
     Axios.put(`/putcountproduct/${item.id}`,{
       newCount:countCart-1
     })

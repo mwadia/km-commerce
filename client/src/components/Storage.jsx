@@ -28,7 +28,7 @@ function Storage(props) {
         setCartProduct(res.data.data);
         SetCountCart(res.data.data.length);
           setTotal(res.data.data.reduce((a,b)=>
-            a +b.Product.price,0))
+            a +(b.Product.price*b.count),0))
       });
     }
   }, [user, openCart]);

@@ -16,7 +16,6 @@ function Home({ setShowNav }) {
   }, []);
   useEffect(() => {
     const { q, c } = filter;
-
     Axios.get(`/allproduct?q=${q}&c=${c}`).then((res) => setProducts(res.data));
   }, [filter,openCart]);
 

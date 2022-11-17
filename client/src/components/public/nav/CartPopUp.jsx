@@ -11,6 +11,7 @@ import TestCart from './TestCart';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import  Axios  from 'axios';
+import { toast } from 'react-toastify';
 
 export default function CartPopUp({ countCart }) {
   const { cartProduct, openCart, setOpenCart,total,setTotal,setCartProduct } = useContext(Store);
@@ -28,7 +29,10 @@ export default function CartPopUp({ countCart }) {
 
   }
   const handelBuy=()=>{
-    Axios.put('/buyproducts',{total:total}).then(res=>console.log(res))
+    Axios.put('/buyproducts',{total:total}).then(res=>toast.success('done'))
+    setTotal(0)
+    setCartProduct([])
+
   }
 
   return (
