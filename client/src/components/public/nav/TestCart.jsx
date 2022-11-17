@@ -50,6 +50,7 @@ export default function TestCart({ item }) {
       direction={{ sm: 'row', xs: 'column' }}
       alignItems={{ sm: 'center' }}
       gap='40px'
+      sx={{margin:'20px 0'}}
     >
       <Avatar
         sx={{
@@ -61,7 +62,7 @@ export default function TestCart({ item }) {
         alt=''
       />
       <Stack direction='column' alignItems='center' gap='25px'>
-        <Typography>{name}</Typography>
+        <Typography variant='h5'>{name}</Typography>
         <Stack direction='row' alignItems='center' gap='20px'>
           <Chip label={`Price:$${price}`} />
           <IconButton

@@ -19,8 +19,8 @@ function App() {
     <>
       <ThemeProvider theme={Theme}>
         <ToastContainer
-          position='top-right'
-          autoClose={5000}
+          position='bottom-left'
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -47,7 +47,6 @@ function App() {
             <Footer />
           </Stack>
         </Storage>
-        <ToastContainer />
       </ThemeProvider>
     </>
   );

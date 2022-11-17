@@ -42,7 +42,7 @@ export default function CartPopUp({ countCart }) {
   };
   const handelBuy = () => {
     Axios.put('/buyproducts', { total: total }).then((res) =>
-      toast.success('done')
+      toast.success('Done!')
     );
     setTotal(0);
     setCartProduct([]);
@@ -74,7 +74,7 @@ export default function CartPopUp({ countCart }) {
         >
           <Container maxWidth='md' sx={{ p: 0, m: 0 }}>
             <Stack
-              gap='20px'
+              gap='0px'
               direction={{ sm: 'column', xs: 'row' }}
               flexWrap={{ xs: 'wrap' }}
               justifyContent={{ xs: 'center' }}
@@ -88,14 +88,14 @@ export default function CartPopUp({ countCart }) {
             </Stack>
           </Container>
           <Divider orientation='vertical' flexItem />
-
           <Stack
             direction={{ xs: 'row', sm: 'column' }}
+            sx={{ background: 'red', width: '35%', height: '100%' }}
           >
             <Typography textAlign='center' variant='h6'>
               Total:${total}
             </Typography>
-            <Button onClick={handelDeletedAll}>delete all items</Button>
+            <Button onClick={handelDeletedAll}>remove all items</Button>
             <Button onClick={handelBuy}>buy</Button>
           </Stack>
         </Stack>
