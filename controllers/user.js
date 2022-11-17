@@ -74,10 +74,17 @@ const editUser=async (req,res)=>{
     res.json({msg:'password is wrong!!'})
 
   }
-
-
-
-
 }
-
-module.exports = { storeUser, signIn,editUser };
+const getuser=async(req,res)=>{
+  try{
+    const {id}=req.params
+    const user=await User.findOne({where:{id:id},attributes:['name','email','userImg','mony']})
+    res.json({data:user})
+  }catch (err) {
+    res.status(400).json({
+      msg: 'something went wrong',
+      err,
+    });
+  }
+  }
+module.exports = { storeUser, signIn,editUser,getuser };

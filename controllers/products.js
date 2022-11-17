@@ -10,13 +10,10 @@ q=''
   if(!c){
     c=''
   }
-  if(id&&gte&&lt){
+  if(id){
     filterProducts={
       id,
-      price:{
-        [Op.between]:[gte,lt],
-
-      },
+     
       category:{
         [Op.iLike]: `%${c}%`
 
@@ -47,13 +44,21 @@ q=''
     }}
   }
 const allProducts=await Product.findAll({where:filterProducts,order: [
-  ['id', 'ASC'],
+  ['id', 'DESC'],
+]})
+  res.json(allProducts)
+}
+const getProductsById=async(req,res)=>{
+ 
+const allProducts=await Product.findAll({where:{UserId:req.params.id},order: [
+  ['id', 'DESC'],
 ]})
   res.json(allProducts)
 }
 const addNewProduct=async(req,res)=>{
   try{
-    const {name,price,count,productImg,category}=req.body
+    let productImg=req.fileUrl
+    const {name,price,count,category}=JSON.parse(req.body.data)
     UserId=req.user.id
     const newProduct=await Product.create({name,price,count,productImg,category,UserId})
     res.json({data:newProduct,msg:'add new product is succuss!'});
@@ -90,4 +95,5 @@ const dstroyProduct=async(req,res)=>{
   }
 
 }
-module.exports={getProduct,addNewProduct,editProduct,dstroyProduct}
+
+module.exports={getProduct,addNewProduct,editProduct,dstroyProduct,getProductsById}

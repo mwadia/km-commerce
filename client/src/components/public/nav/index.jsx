@@ -169,7 +169,7 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
   return (
-    <Box>
+    <Box position='relative' zIndex='2'>
       <AppBar
         position='static'
         sx={{

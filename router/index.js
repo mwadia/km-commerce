@@ -2,7 +2,6 @@ const userCtrl = require('../controllers/user');
 const products = require('../controllers/products');
 const cart = require('../controllers/cart');
 const router = require('express').Router();
-const isAuth = require('../middleware/auth');
 const {
   uploadFile,
   reduceSize,
@@ -15,10 +14,14 @@ router.post(
   cloudUpload,
   userCtrl.storeUser
 );
+router.get('/getuser/:id',userCtrl.getuser)
 router.post('/signin', userCtrl.signIn);
 router.put('/edituser', userCtrl.editUser);
 router.get('/allproduct', products.getProduct);
-router.post('/addnewproduct', products.addNewProduct);
+router.get('/allproducts/:id', products.getProductsById);
+router.post('/addnewproduct',uploadFile().single('file'),
+reduceSize,
+cloudUpload,products.addNewProduct);
 router.put('/editproduct/:id', products.editProduct);
 router.delete('/destroyproduct/:id', products.dstroyProduct);
 router.post('/addproducttocart', cart.addProductToCart);
