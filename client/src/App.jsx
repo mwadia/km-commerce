@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@mui/material/styles';
 import Theme from './helper/Theme';
+import Profile from './pages/Profile';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -38,6 +39,10 @@ function App() {
                 element={<LandingPage setShowNav={setShowNav} />}
               />
               <Route path='/home' element={<Home setShowNav={setShowNav} />} />
+              <Route
+                path='/user/:id'
+                element={<Profile setShowNav={setShowNav} />}
+              />
             </Routes>
             <Footer />
           </Stack>

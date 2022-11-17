@@ -62,7 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const { user } = React.useContext(Store);
+  const { user, setOpenCart } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const { filter, SetFilter, countCart } = React.useContext(Store);
@@ -102,8 +102,11 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {user && (
+        <Link to={`/user/${user.id}`}>
+          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        </Link>
+      )}
     </Menu>
   );
 
@@ -125,7 +128,14 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
+        <IconButton
+          onClick={() => {
+            setOpenCart(true);
+          }}
+          size='large'
+          aria-label='show 4 new mails'
+          color='inherit'
+        >
           <Badge badgeContent={countCart} color='error'>
             <ShoppingCartIcon />
           </Badge>
@@ -173,7 +183,6 @@ export default function PrimarySearchAppBar() {
               sx={{ maxWidth: '100px', marginRight: { xs: '15px', sm: '0' } }}
             >
               <img
-                alt='Remy Sharp'
                 src='./saas/logo-nav.png'
                 style={{ width: '100%' }}
               />
