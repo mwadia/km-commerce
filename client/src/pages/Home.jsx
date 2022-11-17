@@ -22,7 +22,7 @@ function Home({ setShowNav }) {
   return (
     <Stack alignItems='center' gap='20px'>
       <FilterTabs />
-      <Products products={products} />
+      <Products setProducts={setProducts} products={products} />
     </Stack>
   );
 }

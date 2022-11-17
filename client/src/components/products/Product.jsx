@@ -16,8 +16,9 @@ import { useState } from 'react';
 import Axios from 'axios';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import EditAndDeleteBtn from './EditAndDeleteBtn';
 
-export default function Product({ item }) {
+export default function Product({ item,setUserProducts,userProducts }) {
   const { id, name, price, count, productImg } = item;
   const { user, cartProduct, SetCountCart, countCart, openCart } =
     useContext(Store);
@@ -30,6 +31,7 @@ export default function Product({ item }) {
 
     }
   }, [cartProduct, openCart]);
+
   const handelAddtoCart = () => {
     if (isCart) {
       Axios.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
@@ -42,12 +44,12 @@ export default function Product({ item }) {
     SetIsCart(!isCart);
   };
   return (
-    <Box maxWidth='250px' position='relative'>
-      <Card sx={{ maxWidth: 345 }}>
+    <Box width='300px' position='relative'>
+      <Card sx={{ width: 300 }}>
         <CardActionArea>
           <CardMedia
             component='img'
-            height='140'
+            height='200'
             image={productImg}
             alt='green iguana'
           />
@@ -76,7 +78,7 @@ export default function Product({ item }) {
                 label={`quantity: ${count}`}
               />
             </Stack>
-            {user && (
+            {user&& user.id !==item.UserId && (
               <ShoppingCartOutlinedIcon
                 onClick={handelAddtoCart}
                 sx={{
@@ -87,6 +89,7 @@ export default function Product({ item }) {
                 }}
               />
             )}
+            {user&& user.id ===item.UserId && <EditAndDeleteBtn setUserProducts={setUserProducts} userProducts={userProducts} id={id}/>}
           </CardContent>
         </CardActionArea>
       </Card>
