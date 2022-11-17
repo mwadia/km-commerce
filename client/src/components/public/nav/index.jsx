@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
+import {useEffect,useState} from 'react';
+import Axios from 'axios'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartPopUp from './CartPopUp';
 const Search = styled('div')(({ theme }) => ({
@@ -66,6 +68,7 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const { filter, SetFilter, countCart } = React.useContext(Store);
+  const [MyNotificationsNum,setNMyNotifications]=useState([])
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,9 +85,13 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  useEffect(()=>{
+    Axios('/getnotifications').then(res=>setNMyNotifications(res.data.data))
+  },[])
   const handelSarech = (e) => {
     SetFilter({ ...filter, q: e.target.value });
   };
+ 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -148,7 +155,7 @@ export default function PrimarySearchAppBar() {
           aria-label='show 17 new notifications'
           color='inherit'
         >
-          <Badge badgeContent={17} color='error'>
+          <Badge badgeContent={MyNotificationsNum.length} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -215,7 +222,7 @@ export default function PrimarySearchAppBar() {
                   aria-label='show 17 new notifications'
                   color='inherit'
                 >
-                  <Badge badgeContent={17} color='error'>
+                  <Badge badgeContent={MyNotificationsNum.length} color='error'>
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
