@@ -18,6 +18,7 @@ import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartPopUp from './CartPopUp';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -64,7 +65,7 @@ export default function PrimarySearchAppBar() {
   const { user } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { filter, SetFilter } = React.useContext(Store);
+  const { filter, SetFilter, countCart } = React.useContext(Store);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -125,11 +126,11 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem>
         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
+          <Badge badgeContent={countCart} color='error'>
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Cart</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -193,16 +194,13 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           {user && (
             <Box>
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <IconButton
-                  size='large'
-                  aria-label='show 4 new mails'
-                  color='inherit'
-                >
-                  <Badge badgeContent={4} color='error'>
-                    <ShoppingCartIcon />
-                  </Badge>
-                </IconButton>
+              <Box
+                sx={{
+                  display: { xs: 'none', md: 'flex', alignItems: 'center' },
+                }}
+              >
+                <CartPopUp countCart={countCart} />
+
                 <IconButton
                   size='large'
                   aria-label='show 17 new notifications'

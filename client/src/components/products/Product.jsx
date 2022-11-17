@@ -17,20 +17,24 @@ import { Store } from '../Storage';
 import { useState } from 'react';
 import Axios from 'axios';
 import { useEffect } from 'react';
+
 export default function Product({ item }) {
   const { id, name, price, count, productImg } = item;
-  const { user, cartProduct } = useContext(Store);
+  const { user, cartProduct, SetCountCart, countCart, openCart } =
+    useContext(Store);
   const [isCart, SetIsCart] = useState(false);
   useEffect(() => {
     if (cartProduct.some((e) => e.ProductId === id)) {
       SetIsCart(true);
     }
-  }, [cartProduct]);
+  }, [cartProduct, openCart]);
   const handelAddtoCart = () => {
     if (isCart) {
       Axios.delete(`/destroyoneproductcart/${id}`);
+      SetCountCart(countCart - 1);
     } else {
       Axios.post('/addproducttocart', { ProductId: id });
+      SetCountCart(countCart + 1);
     }
     SetIsCart(!isCart);
   };
