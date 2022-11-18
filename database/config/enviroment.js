@@ -6,15 +6,17 @@ if (!nodeEnv) {
 }
 
 let dbUrl;
+let ssl=false
 switch (nodeEnv) {
   case 'development':
     dbUrl = process.env.DEV_DB_URL;
     break;
   case 'production':
     dbUrl = process.env.DATABASE_URL;
+    
     ssl = {
       require: true,
-      rejectunauthorized: false,
+      rejectUnauthorized: false,
     };
     break;
   case 'test':
@@ -28,4 +30,5 @@ module.exports = {
   port,
   dbUrl,
   nodeEnv,
+  ssl
 };
