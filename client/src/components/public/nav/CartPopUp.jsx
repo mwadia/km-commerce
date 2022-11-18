@@ -18,7 +18,8 @@ import { Stack } from '@mui/system';
 import { useState } from 'react';
 import Axios from 'axios';
 import { toast } from 'react-toastify';
-
+import io from "socket.io-client";
+const socket=io.connect('http://localhost:5000')
 export default function CartPopUp({ countCart }) {
   const {
     cartProduct,
@@ -41,8 +42,10 @@ export default function CartPopUp({ countCart }) {
     setCartProduct([]);
   };
   const handelBuy = () => {
-    Axios.put('/buyproducts', { total: total }).then((res) =>
+    Axios.put('/buyproducts', { total: total }).then((res) =>{
       toast.success('done')
+      socket.emit('notification',{data:cartProduct.map(e=>e=e.Product.UserId)});
+}
     );
     setTotal(0);
     setCartProduct([]);

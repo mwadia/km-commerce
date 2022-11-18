@@ -1,6 +1,7 @@
 const userCtrl = require('../controllers/user');
 const products = require('../controllers/products');
 const cart = require('../controllers/cart');
+const notifications=require('../controllers/notification')
 const router = require('express').Router();
 const {
   uploadFile,
@@ -37,4 +38,5 @@ router.delete(
 );
 router.put('/buyproducts', cart.buyProducts);
 router.put('/putcountproduct/:id',cart.putCountProduct)
+router.get('/getnotifications',notifications.getNotification)
 module.exports = router;

@@ -33,6 +33,7 @@ export default function Product({ item,setUserProducts,userProducts }) {
   }, [cartProduct, openCart]);
 
   const handelAddtoCart = () => {
+    console.log(111);
     if (isCart) {
       Axios.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
       );

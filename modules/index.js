@@ -1,4 +1,5 @@
 const Product = require('./product');
 const User = require('./user');
 const Cart =require('./cart')
-module.exports = { Product, User,Cart };
+const Notification=require('./notification')
+module.exports = { Product, User,Cart,Notification };

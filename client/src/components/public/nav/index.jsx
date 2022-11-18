@@ -10,15 +10,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
+import {useEffect,useState} from 'react';
+import Axios from 'axios'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartPopUp from './CartPopUp';
+import io from "socket.io-client";
+import Notifications from './Notifications';
+const socket=io.connect('http://localhost:5000')
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -66,6 +70,8 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const { filter, SetFilter, countCart } = React.useContext(Store);
+  const [MyNotifications,setNMyNotifications]=useState([])
+  const [MyNotificationsNum,setNMyNotificationsNum]=useState(0)
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,9 +88,20 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  useEffect(()=>{
+    Axios('/getnotifications').then(res=>setNMyNotificationsNum(res.data.data.length))
+  },[])
+  socket.on('notification', function(msg) {
+    if(user){
+      let noti= msg.data.filter(e=>e===user.id)
+      setNMyNotificationsNum(MyNotificationsNum+noti.length)
+    
+    }
+    });
   const handelSarech = (e) => {
     SetFilter({ ...filter, q: e.target.value });
   };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -148,9 +165,11 @@ export default function PrimarySearchAppBar() {
           aria-label='show 17 new notifications'
           color='inherit'
         >
-          <Badge badgeContent={17} color='error'>
-            <NotificationsIcon />
-          </Badge>
+                      <Notifications/>
+
+          <Notifications 
+          setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
+           MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
@@ -210,15 +229,10 @@ export default function PrimarySearchAppBar() {
               >
                 <CartPopUp countCart={countCart} />
 
-                <IconButton
-                  size='large'
-                  aria-label='show 17 new notifications'
-                  color='inherit'
-                >
-                  <Badge badgeContent={17} color='error'>
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
+             
+                  <Notifications
+                  setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
+                   MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
                 <IconButton
                   size='large'
                   edge='end'
