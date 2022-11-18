@@ -29,7 +29,9 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.25.5",
-    "tinify": "^1.7.1"
+    "tinify": "^1.7.1",
+    "socket.io": "^4.5.2",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
