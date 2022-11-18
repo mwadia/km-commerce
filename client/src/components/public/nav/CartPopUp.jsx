@@ -28,8 +28,15 @@ export default function CartPopUp({ countCart }) {
     total,
     setTotal,
     setCartProduct,
+    SetCountCart
   } = useContext(Store);
   const handleClickOpen = () => {
+    Axios('/getcartproduct').then((res) => {
+      setCartProduct(res.data.data);
+      SetCountCart(res.data.data.length);
+        setTotal(res.data.data.reduce((a,b)=>
+          a +(b.Product.price*b.count),0))
+    });
     setOpenCart(true);
   };
 

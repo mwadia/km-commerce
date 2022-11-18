@@ -11,16 +11,15 @@ import { useState } from 'react';
 import SignInBtn from '../public/nav/SignInBtn';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Stack ,Box} from '@mui/system';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+
 import Axios from 'axios'
-export default function AddNewProduct({userProducts,setUserProducts}) {
+export default function EditProduct({item,setNewItem}) {
+  const { id} = item;
+
   const [open, setOpen] = React.useState(false);
-  const [newProduct, setNewProduct] = React.useState({
-    id: 0,
-name: "",
-price: '',
-count: '',
-category: ""
-  });
+  const [newProduct, setNewProduct] = React.useState(item);
   const [imgFile,setImgFile]=useState('')
   const[loading,setLoading]=useState(false)
   const handleClickOpen = () => {
@@ -39,26 +38,21 @@ category: ""
 const handelNewProduct=(e)=>{
   e.preventDefault();
   const newData = new FormData();
-  newData.append('file', imgFile);
+  if(imgFile){
+    newData.append('file', imgFile);
+  }
   newData.append('data', JSON.stringify(newProduct));
   setLoading(true)
   Axios({
-    method: 'post',
-    url: '/addnewproduct',
+    method: 'put',
+    url: `/editproduct/${id}`,
     data: newData,
     headers: { 'Content-Type': 'multipart/form-data' },
   }).then((isExist) => {
     setLoading(false)
     if (isExist.data.data) {
-      setUserProducts([isExist.data.data,...userProducts])
+      setNewItem(isExist.data.data)
       setOpen(false)
-    setNewProduct({
-        id: 0,
-    name: "",
-    price: '',
-    count: '',
-    category: ""
-      })
       setImgFile('')
     }
   });}
@@ -66,8 +60,9 @@ const handelNewProduct=(e)=>{
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-      Add New Product      </Button>
+      <IconButton variant="outlined" onClick={handleClickOpen}>
+        <EditIcon/>
+   </IconButton>
       <Dialog
         fullWidth={true}
         maxWidth={'xs'}
@@ -129,7 +124,7 @@ const handelNewProduct=(e)=>{
               </Select>
             </FormControl>
             <UploadImgBtn setImgFile={setImgFile}/>
-            <SignInBtn content={'Add New Product'}/>
+            <SignInBtn content={'edit New Product'}/>
             </Stack>
           </form>
           {loading &&<Box

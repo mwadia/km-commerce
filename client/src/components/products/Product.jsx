@@ -19,7 +19,8 @@ import { toast } from 'react-toastify';
 import EditAndDeleteBtn from './EditAndDeleteBtn';
 
 export default function Product({ item,setUserProducts,userProducts }) {
-  const { id, name, price, count, productImg } = item;
+  const[newItem,setNewItem]=useState(item)
+  const { id, name, price, count, productImg } = newItem;
   const { user, cartProduct, SetCountCart, countCart, openCart } =
     useContext(Store);
   const [isCart, SetIsCart] = useState(false);
@@ -31,9 +32,7 @@ export default function Product({ item,setUserProducts,userProducts }) {
 
     }
   }, [cartProduct, openCart]);
-
   const handelAddtoCart = () => {
-    console.log(111);
     if (isCart) {
       Axios.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
       );
@@ -90,7 +89,7 @@ export default function Product({ item,setUserProducts,userProducts }) {
                 }}
               />
             )}
-            {user&& user.id ===item.UserId && <EditAndDeleteBtn setUserProducts={setUserProducts} userProducts={userProducts} id={id}/>}
+            {user&& user.id ===item.UserId && <EditAndDeleteBtn item={newItem} setNewItem={setNewItem} setUserProducts={setUserProducts} userProducts={userProducts} id={id}/>}
           </CardContent>
         </CardActionArea>
       </Card>

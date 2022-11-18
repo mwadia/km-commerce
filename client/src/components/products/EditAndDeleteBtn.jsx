@@ -6,6 +6,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import DeleteMsg from './DeleteMsg';
+import EditProduct from '../profile/EditProduct';
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
 color:'red',
@@ -23,12 +24,12 @@ color:'red',
 
 
 
-export default function EditAndDeleteBtn({id,setUserProducts,userProducts}) {
+export default function EditAndDeleteBtn({item,setNewItem,setUserProducts,userProducts}) {
+  const { id } = item;
   const actions = [
-    { icon: <EditIcon sx={{color:'black'}} />, name: 'edit'},
+    { icon: <EditProduct setNewItem={setNewItem} item={item} sx={{color:'black'}} />, name: 'edit'},
     { icon:<DeleteMsg setUserProducts={setUserProducts} userProducts={userProducts} id={id}/>
     , name: 'Delete' },
-  
   ];
 
   return (
