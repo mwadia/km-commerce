@@ -24,7 +24,10 @@ function Storage(props) {
   }, []);
   useEffect(() => {
     if (user) {
-    
+      Axios('/getcartproduct').then((res) => {
+        SetCountCart(res.data.data.length);
+         
+      });
     }
   }, [user, openCart]);
   return (
