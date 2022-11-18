@@ -12,6 +12,10 @@ switch (nodeEnv) {
     break;
   case 'production':
     dbUrl = process.env.DATABASE_URL;
+    ssl = {
+      require: true,
+      rejectunauthorized: false,
+    };
     break;
   case 'test':
     dbUrl = process.env.TEST_URL;

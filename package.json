@@ -7,6 +7,7 @@
     "start": "cross-env NODE_ENV=production node index",
     "dev": "cross-env NODE_ENV=development nodemon index",
     "buildDB": " cross-env NODE_ENV=development node database/db/build.js",
+    "buildDBP": " cross-env NODE_ENV=production node database/db/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
