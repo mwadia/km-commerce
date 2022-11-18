@@ -15,7 +15,6 @@ const destroyAllNotifications=async (req,res)=>{
     await Notification.destroy({
       where: {UserId:req.user.id},
     });
-    console.log(22222);
 res.json({msg:'notfications deleted!!'})
   }catch (err) {
     res.status(400).json({

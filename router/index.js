@@ -23,7 +23,9 @@ router.get('/allproducts/:id', products.getProductsById);
 router.post('/addnewproduct',uploadFile().single('file'),
 reduceSize,
 cloudUpload,products.addNewProduct);
-router.put('/editproduct/:id', products.editProduct);
+router.put('/editproduct/:id',uploadFile().single('file'),
+reduceSize,
+cloudUpload, products.editProduct);
 router.delete('/destroyproduct/:id', products.dstroyProduct);
 router.post('/addproducttocart', cart.addProductToCart);
 router.get('/getcartproduct', cart.getPrductsCart);

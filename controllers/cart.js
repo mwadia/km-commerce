@@ -51,6 +51,21 @@ const destroyOneProductInCart = async (req, res) => {
     });
   }
 };
+const destroyOneProductInCartByProductId = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    await Cart.destroy({
+      where: { ProductId: req.params.id},
+    });
+    console.log(111);
+    res.json({ msg: 'deleted this product is succuss!' });
+  } catch (err) {
+    res.status(400).json({
+      msg: 'something went wrong',
+      err,
+    });
+  }
+};
 const destroyAllProductsInCart = async (req, res) => {
   try {
     const { id } = req.user;
@@ -147,5 +162,6 @@ module.exports = {
   destroyOneProductInCart,
   destroyAllProductsInCart,
   buyProducts,
-  putCountProduct
+  putCountProduct,
+  destroyOneProductInCartByProductId
 };

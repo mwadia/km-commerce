@@ -1,4 +1,4 @@
-const { Product } = require('../database/db');
+const { Product,Cart } = require('../database/db');
 const { Op } = require('sequelize');
 
 const getProduct=async(req,res)=>{
@@ -72,8 +72,10 @@ const addNewProduct=async(req,res)=>{
 }
 const editProduct=async (req,res)=>{
   try{
-    await Product.update(req.body,{where:req.params})
-    res.json({data:req.body,msg:'edit the product is succuss!'})   
+    const {name,price,count,category,productImg}=JSON.parse(req.body.data)
+    let newImg=req.fileUrl ||productImg
+    await Product.update({name,price,count,category,productImg:newImg},{where:req.params})
+    res.json({data:{...JSON.parse(req.body.data),productImg:newImg||productImg},msg:'edit the product is succuss!'})   
   }catch(err){
     res.status(400).json({
       msg: 'something went wrong',
@@ -83,9 +85,15 @@ const editProduct=async (req,res)=>{
  }
 const dstroyProduct=async(req,res)=>{
   try{
+    await Cart.destroy({
+      where: { ProductId: req.params.id},
+    });
     await Product.destroy({
       where: req.params
     })
+   
+    console.log(req.params.id);
+
     res.json({msg:'deleted this product is succuss!'})
   }catch(err){
     res.status(400).json({
