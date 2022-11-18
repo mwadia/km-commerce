@@ -100,6 +100,8 @@ const buyProducts = async (req, res) => {
               { where: { id: prct.id } }
             );
           }
+          
+       
           const reseverUser=await User.findOne({ where: {id:prct.UserId} });
           await User.update({mony:reseverUser.mony+(prct.price*products[i].count)},{where:{id:prct.UserId}})
           await Notification.create({UserId:prct.UserId,massage:`${products[i].count} of the ${prct.name} have been sold,${prct.price*products[i].count} has been added to your balance

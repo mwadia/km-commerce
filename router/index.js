@@ -39,4 +39,5 @@ router.delete(
 router.put('/buyproducts', cart.buyProducts);
 router.put('/putcountproduct/:id',cart.putCountProduct)
 router.get('/getnotifications',notifications.getNotification)
+router.delete('/destroyallaotifications',notifications.destroyAllNotifications)
 module.exports = router;

@@ -1,5 +1,4 @@
 const { Notification } = require('../database/db');
-
 const getNotification=async(req,res)=>{
   try{
     const notification=await Notification.findAll({where:{UserId:req.user.id},attributes:['massage']})
@@ -11,6 +10,20 @@ const getNotification=async(req,res)=>{
     });
   }
 }
+const destroyAllNotifications=async (req,res)=>{
+  try{
+    await Notification.destroy({
+      where: {UserId:req.user.id},
+    });
+    console.log(22222);
+res.json({msg:'notfications deleted!!'})
+  }catch (err) {
+    res.status(400).json({
+      msg: 'something went wrong',
+      err,
+    });
+  }
+}
 module.exports={
-  getNotification
+  getNotification,destroyAllNotifications
 }
