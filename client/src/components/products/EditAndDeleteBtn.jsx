@@ -30,7 +30,6 @@ export default function EditAndDeleteBtn({id,setUserProducts,userProducts}) {
     , name: 'Delete' },
   
   ];
-  console.log(userProducts);
 
   return (
     <Box className='owner'  sx={{ transform: 'translateZ(0px)',position: 'absolute' ,top:'0'}}>

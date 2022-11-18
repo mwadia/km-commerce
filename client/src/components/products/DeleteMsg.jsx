@@ -13,7 +13,6 @@ export default function DeleteMsg({id,setUserProducts,userProducts}) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  console.log(userProducts);
 
 
   const handleClose = () => {
