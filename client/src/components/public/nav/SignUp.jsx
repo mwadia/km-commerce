@@ -56,8 +56,6 @@ function SignUp({ setLoading }) {
       data: newData,
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then((isExist) => {
-      console.log(isExist);
-      console.log(isExist.data.data);
       JwtService.setToken(isExist.data.data.token)
       setLoading(false);
       if (isExist.data.data) {

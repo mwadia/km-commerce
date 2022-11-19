@@ -8,4 +8,5 @@ const Apiservices=axios.create({
     'Content-Type': 'application/json',
   },
 });
+console.log(process.env.REACT_APP_BASE_URL);
 export default Apiservices

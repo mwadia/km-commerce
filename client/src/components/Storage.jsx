@@ -29,8 +29,10 @@ function Storage(props) {
   useEffect(() => {
     if (user) {
       Apiservices.get('/getcartproduct').then((res) => {
-        SetCountCart(res.data.data.length);
-         
+        if(res.data.data){
+          SetCountCart(res.data.data.length); 
+
+        }
       });
     }
   }, [user, openCart]);

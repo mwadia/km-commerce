@@ -36,7 +36,6 @@ function SignIn({ setLoading }) {
       setLoading(false);
       if (res.data.data) {
         JwtService.setToken(res.data.data.token)
-
         setUser(res.data.data);
         toast.success(res.data.msg);
         setOpen(false);
