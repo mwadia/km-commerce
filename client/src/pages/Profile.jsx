@@ -1,10 +1,10 @@
 import { Stack } from '@mui/system';
-import  Axios  from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserInfo from '../components/profile/UserInfo';
 import UserProducts from '../components/profile/UserProducts';
 import { Store } from '../components/Storage';
+import Apiservices from '../services/ApiServices';
 
 function Profile({ setShowNav }) {
   const paramsId = useParams().id;
@@ -13,10 +13,10 @@ function Profile({ setShowNav }) {
   const [userInfo,setUserInfo]=useState({})
   useEffect(() => {
     setShowNav(true);
-    Axios(`/getuser/${paramsId}`).then(res=>setUserInfo(res.data.data))
+    Apiservices.get(`/getuser/${paramsId}`).then(res=>setUserInfo(res.data.data))
   }, []);
   useEffect(() => {
-    Axios.get(`/allproducts/${paramsId}`).then((res) =>{ 
+    Apiservices.get(`/allproducts/${paramsId}`).then((res) =>{ 
       setUserProducts(res.data)});
   }, [openCart]);
   return <Stack sx={{width:{sm:'100%'},minHeight:{sm:'90vh',xs:'0'}}} direction={{sm:'row',xs:'column-reverse'}} justifyContent='space-between'>

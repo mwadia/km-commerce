@@ -13,10 +13,10 @@ import Chip from '@mui/material/Chip';
 import { useContext } from 'react';
 import { Store } from '../Storage';
 import { useState } from 'react';
-import Axios from 'axios';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import EditAndDeleteBtn from './EditAndDeleteBtn';
+import Apiservices from '../../services/ApiServices';
 
 export default function Product({ item,setUserProducts,userProducts }) {
   const[newItem,setNewItem]=useState(item)
@@ -34,11 +34,11 @@ export default function Product({ item,setUserProducts,userProducts }) {
   }, [cartProduct, openCart]);
   const handelAddtoCart = () => {
     if (isCart) {
-      Axios.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
+      Apiservices.delete(`/destroyoneproductcart/${id}`).then(res=>toast.success(res.data.msg)
       );
       SetCountCart(countCart - 1);
     } else {
-      Axios.post('/addproducttocart', { ProductId: id }).then(res=>toast.success(res.data.msg));
+      Apiservices.post('/addproducttocart', { ProductId: id }).then(res=>toast.success(res.data.msg));
       SetCountCart(countCart + 1);
     }
     SetIsCart(!isCart);

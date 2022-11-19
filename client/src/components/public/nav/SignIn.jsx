@@ -8,12 +8,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
-import Axios from 'axios';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { Store } from '../../Storage';
+import Apiservices from '../../../services/ApiServices';
+import JwtService from '../../../services/TokenServices';
 function SignIn({ setLoading }) {
   const { setUser, setOpen } = useContext(Store);
   const [signin, setSignIn] = useState({
@@ -31,9 +32,11 @@ function SignIn({ setLoading }) {
   const handelSignIn = (e) => {
     e.preventDefault();
     setLoading(true);
-    Axios.post('/signin', signin).then((res) => {
+    Apiservices.post('/signin', signin).then((res) => {
       setLoading(false);
       if (res.data.data) {
+        JwtService.setToken(res.data.data.token)
+
         setUser(res.data.data);
         toast.success(res.data.msg);
         setOpen(false);

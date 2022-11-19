@@ -8,14 +8,14 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
-import Axios from 'axios'
+import Apiservices from '../../../services/ApiServices';
 export default function Notifications({MyNotifications,MyNotificationsNum,setNMyNotifications,setMyNotificationsNum}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    Axios('/getnotifications').then(res=>setNMyNotifications(res.data.data))
-    Axios.delete('/destroyallaotifications')
+    Apiservices.get('/getnotifications').then(res=>setNMyNotifications(res.data.data))
+    Apiservices.delete('/destroyallaotifications')
     setMyNotificationsNum(0)
   };
   const handleClose = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
-import Axios from 'axios';
+import Apiservices from '../services/ApiServices';
 export const Store = createContext(0);
 function Storage(props) {
   const [user, setUser] = useState(null);
@@ -16,15 +16,19 @@ function Storage(props) {
     c: '',
   });
   useEffect(() => {
-    Axios.get('/user').then((res) => {
-      if (res.data.data) {
-        setUser(res.data.data);
-      }
-    });
+    Apiservices.get('/user').then((res) => {
+      console.log(res);
+        if (res.data.data) {
+          setUser(res.data.data);
+        }
+      });
+   
   }, []);
+  console.log(process.env.REACT_APP_BASE_URL
+    );
   useEffect(() => {
     if (user) {
-      Axios('/getcartproduct').then((res) => {
+      Apiservices.get('/getcartproduct').then((res) => {
         SetCountCart(res.data.data.length);
          
       });

@@ -10,11 +10,12 @@ import FormControl from '@mui/material/FormControl';
 import SignInBtn from './SignInBtn';
 import UploadImgBtn from './UploadImgBtn';
 import { useState } from 'react';
-import Axios from 'axios';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { Store } from '../../Storage';
+import Apiservices from '../../../services/ApiServices';
+import JwtService from '../../../services/TokenServices';
 function SignUp({ setLoading }) {
   const { setUser, setOpen } = useContext(Store);
   const [values, setValues] = React.useState({
@@ -49,12 +50,15 @@ function SignUp({ setLoading }) {
     newData.append('file', imgFile);
     newData.append('data', JSON.stringify(signUp));
     setLoading(true);
-    Axios({
+    Apiservices({
       method: 'post',
       url: '/signup',
       data: newData,
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then((isExist) => {
+      console.log(isExist);
+      console.log(isExist.data.data);
+      JwtService.setToken(isExist.data.data.token)
       setLoading(false);
       if (isExist.data.data) {
         setUser(isExist.data.data);

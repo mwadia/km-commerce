@@ -11,7 +11,7 @@ import { useState } from 'react';
 import SignInBtn from '../public/nav/SignInBtn';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Stack ,Box} from '@mui/system';
-import Axios from 'axios'
+import Apiservices from '../../services/ApiServices';
 export default function AddNewProduct({userProducts,setUserProducts}) {
   const [open, setOpen] = React.useState(false);
   const [newProduct, setNewProduct] = React.useState({
@@ -42,7 +42,7 @@ const handelNewProduct=(e)=>{
   newData.append('file', imgFile);
   newData.append('data', JSON.stringify(newProduct));
   setLoading(true)
-  Axios({
+  Apiservices({
     method: 'post',
     url: '/addnewproduct',
     data: newData,
@@ -61,7 +61,8 @@ const handelNewProduct=(e)=>{
       })
       setImgFile('')
     }
-  });}
+  })
+  ;}
 
 
   return (

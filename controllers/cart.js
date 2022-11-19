@@ -1,7 +1,8 @@
 const { Cart, User, Product,Notification } = require('../database/db');
 const getPrductsCart = async (req, res) => {
-  const { id } = req.user;
-  if (id) {
+  if (req.user) {
+    const { id } = req.user;
+
     try {
       const productsCart = await Cart.findAll({
         include: [
@@ -53,7 +54,6 @@ const destroyOneProductInCart = async (req, res) => {
 };
 const destroyOneProductInCartByProductId = async (req, res) => {
   try {
-    console.log(req.params.id);
     await Cart.destroy({
       where: { ProductId: req.params.id},
     });

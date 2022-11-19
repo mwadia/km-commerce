@@ -5,13 +5,19 @@ const jwtFun = (info, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.cookie('token', data);
-      res.json({ msg: 'success!!', data: info });
+      res.cookie('token', data,{
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'mydomain.com',
+        secure: true,
+        sameSite:'none',
+      });
+      res.json({ msg: 'success!!', data: {...info,token:data} });
     }
   });
 };
 const auth = (req, res, next) => {
-  const { token } = req.cookies;
+
+  const token  = req.header('Authorization');
   jwt.verify(token, process.env.SECRET_KEY, (err, data) => {
     if (!err) {
       req.user = {

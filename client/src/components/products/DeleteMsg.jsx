@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
-import Axios from 'axios'
+import Apiservices from '../../services/ApiServices';
 export default function DeleteMsg({id,setUserProducts,userProducts}) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -19,7 +19,7 @@ export default function DeleteMsg({id,setUserProducts,userProducts}) {
     setOpen(false);
   };
 const handelDelete=()=>{
-  Axios.delete(`/destroyproduct/${id}`)
+  Apiservices.delete(`/destroyproduct/${id}`)
   setUserProducts(userProducts.filter(e=>e.id!==id))
   setOpen(false);
 

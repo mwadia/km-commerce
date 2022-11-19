@@ -13,8 +13,10 @@ const cors=require('cors')
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { userInfo } = require('os');
-app.use(cors())
+app.use(cors({
+  origin: "*",
+  credentials: true,
+}))
 const io = new Server(server,{
   cors:{
     origin:'*',
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
+
 app.use(auth);
 app.use('/user', isAuth);
 io.on('connection', (socket) => {

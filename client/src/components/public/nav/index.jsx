@@ -16,12 +16,12 @@ import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
 import {useEffect,useState} from 'react';
-import Axios from 'axios'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartPopUp from './CartPopUp';
 import io from "socket.io-client";
 import Notifications from './Notifications';
-const socket=io.connect('http://localhost:5000')
+import Apiservices from '../../../services/ApiServices';
+const socket=io.connect(process.env.REACT_APP_BASE_URL)
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -89,13 +89,12 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   useEffect(()=>{
-    Axios('/getnotifications').then(res=>setNMyNotificationsNum(res.data.data.length))
+    Apiservices.get('/getnotifications').then(res=>setNMyNotificationsNum(res.data.data.length))
   },[])
   socket.on('notification', function(msg) {
     if(user){
       let noti= msg.data.filter(e=>e===user.id)
       setNMyNotificationsNum(MyNotificationsNum+noti.length)
-    
     }
     });
   const handelSarech = (e) => {

@@ -20,7 +20,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { Store } from '../../Storage';
-import Axios from 'axios';
+import Apiservices from '../../../services/ApiServices';
 
 export default function TestCart({ item }) {
   const { id, name, price, count, productImg } = item.Product;
@@ -28,7 +28,7 @@ export default function TestCart({ item }) {
   const [countCart, setCountCart] = useState(item.count);
   const handelAdd = () => {
     setCountCart(countCart + 1);
-    Axios.put(`/putcountproduct/${item.id}`, {
+    Apiservices.put(`/putcountproduct/${item.id}`, {
       newCount: countCart + 1,
     });
     setTotal(total + price);
@@ -36,12 +36,12 @@ export default function TestCart({ item }) {
   const handelRemove = () => {
     setCountCart(countCart - 1);
     setTotal(total - price);
-    Axios.put(`/putcountproduct/${item.id}`, {
+    Apiservices.put(`/putcountproduct/${item.id}`, {
       newCount: countCart - 1,
     });
   };
   const removeFromCart = () => {
-    Axios.delete(`/destroyoneproductcart/${id}`);
+    Apiservices.delete(`/destroyoneproductcart/${id}`);
     setCartProduct(cartProduct.filter((e) => e.Product.id !== id));
     setTotal(total - price * countCart);
   };

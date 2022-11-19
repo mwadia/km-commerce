@@ -13,8 +13,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Stack ,Box} from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import Apiservices from '../../services/ApiServices';
 
-import Axios from 'axios'
 export default function EditProduct({item,setNewItem}) {
   const { id} = item;
 
@@ -43,7 +43,7 @@ const handelNewProduct=(e)=>{
   }
   newData.append('data', JSON.stringify(newProduct));
   setLoading(true)
-  Axios({
+  Apiservices({
     method: 'put',
     url: `/editproduct/${id}`,
     data: newData,
@@ -55,7 +55,8 @@ const handelNewProduct=(e)=>{
       setOpen(false)
       setImgFile('')
     }
-  });}
+  })
+  ;}
 
 
   return (

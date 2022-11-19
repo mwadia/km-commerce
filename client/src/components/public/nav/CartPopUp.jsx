@@ -16,10 +16,10 @@ import CartProduct from './CartProduct';
 import TestCart from './TestCart';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import Axios from 'axios';
 import { toast } from 'react-toastify';
 import io from "socket.io-client";
-const socket=io.connect('http://localhost:5000')
+import Apiservices from '../../../services/ApiServices';
+const socket=io.connect(process.env.REACT_APP_BASE_URL)
 export default function CartPopUp({ countCart }) {
   const {
     cartProduct,
@@ -31,7 +31,7 @@ export default function CartPopUp({ countCart }) {
     SetCountCart
   } = useContext(Store);
   const handleClickOpen = () => {
-    Axios('/getcartproduct').then((res) => {
+    Apiservices.get('/getcartproduct').then((res) => {
       setCartProduct(res.data.data);
       SetCountCart(res.data.data.length);
         setTotal(res.data.data.reduce((a,b)=>
@@ -44,12 +44,12 @@ export default function CartPopUp({ countCart }) {
     setOpenCart(false);
   };
   const handelDeletedAll = () => {
-    Axios.delete('/destroyallproductcart');
+    Apiservices.delete('/destroyallproductcart');
     setTotal(0);
     setCartProduct([]);
   };
   const handelBuy = () => {
-    Axios.put('/buyproducts', { total: total }).then((res) =>{
+    Apiservices.put('/buyproducts', { total: total }).then((res) =>{
       toast.success('done')
       socket.emit('notification',{data:cartProduct.map(e=>e=e.Product.UserId)});
 }
