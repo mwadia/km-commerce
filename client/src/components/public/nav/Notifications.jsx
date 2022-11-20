@@ -9,13 +9,15 @@ import Tooltip from '@mui/material/Tooltip';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import Apiservices from '../../../services/ApiServices';
+import { Store } from '../../Storage';
 export default function Notifications({MyNotifications,MyNotificationsNum,setNMyNotifications,setMyNotificationsNum}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {token}=React.useContext(Store)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    Apiservices.get('/getnotifications').then(res=>setNMyNotifications(res.data.data))
-    Apiservices.delete('/destroyallaotifications')
+    Apiservices.get('/getnotifications',{token:token}).then(res=>setNMyNotifications(res.data.data))
+    Apiservices.delete('/destroyallaotifications',{token:token})
     setMyNotificationsNum(0)
   };
   const handleClose = () => {
@@ -29,7 +31,6 @@ export default function Notifications({MyNotifications,MyNotificationsNum,setNMy
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}

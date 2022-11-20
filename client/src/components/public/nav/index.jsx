@@ -21,6 +21,7 @@ import CartPopUp from './CartPopUp';
 import io from "socket.io-client";
 import Notifications from './Notifications';
 import Apiservices from '../../../services/ApiServices';
+import HomeIcon from '@mui/icons-material/Home';
 const socket=io.connect(process.env.REACT_APP_BASE_URL)
 
 const Search = styled('div')(({ theme }) => ({
@@ -164,8 +165,6 @@ export default function PrimarySearchAppBar() {
           aria-label='show 17 new notifications'
           color='inherit'
         >
-                      <Notifications/>
-
           <Notifications 
           setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
            MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
@@ -232,6 +231,12 @@ export default function PrimarySearchAppBar() {
                   <Notifications
                   setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
                    MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
+                   <Link to='home'>
+                   <IconButton>
+                  <HomeIcon sx={{color:'#ffff'}}/>
+                </IconButton>
+                   </Link>
+                     
                 <IconButton
                   size='large'
                   edge='end'
@@ -243,6 +248,7 @@ export default function PrimarySearchAppBar() {
                 >
                   <AvatarNav user={user} />
                 </IconButton>
+              
               </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
