@@ -1,12 +1,26 @@
-import axios from "axios";
+import axios from 'axios'
 import JwtService from "./TokenServices";
-const Apiservices=axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-  headers: {
-    Authorization: `${JwtService.getToken()}`,
-    accept: 'application/json',
-    'Content-Type': 'application/json',
+
+const Apiservices = axios.create({ baseURL: process.env.REACT_APP_BASE_URL, withCredentials: true })
+
+Apiservices.interceptors.request.use(
+  config => {
+  
+    config.headers['Authorization'] = `Bearer ${JwtService.getToken()}`
+    return Promise.resolve(config)
   },
-});
-console.log(process.env.REACT_APP_BASE_URL);
+  error => {
+    return Promise.reject(error)
+  }
+)
+// instance.interceptors.response.use(
+//   (response) => {},
+//   (error) => {}
+// );
+
 export default Apiservices
+
+
+
+
+

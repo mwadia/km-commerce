@@ -17,15 +17,13 @@ function Storage(props) {
   });
   useEffect(() => {
     Apiservices.get('/user').then((res) => {
-      console.log(res);
         if (res.data.data) {
           setUser(res.data.data);
         }
       });
    
   }, []);
-  console.log(process.env.REACT_APP_BASE_URL
-    );
+ 
   useEffect(() => {
     if (user) {
       Apiservices.get('/getcartproduct').then((res) => {
