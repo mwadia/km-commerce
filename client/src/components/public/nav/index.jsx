@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import {Box,Stack} from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
@@ -22,6 +22,8 @@ import io from "socket.io-client";
 import Notifications from './Notifications';
 import Apiservices from '../../../services/ApiServices';
 import HomeIcon from '@mui/icons-material/Home';
+import MenuItems from './MenuItems';
+import JwtService from '../../../services/TokenServices';
 const socket=io.connect(process.env.REACT_APP_BASE_URL)
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,13 +66,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const { user, setOpenCart } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { filter, SetFilter, countCart } = React.useContext(Store);
+  const { filter, SetFilter, countCart,setUser } = React.useContext(Store);
   const [MyNotifications,setNMyNotifications]=useState([])
   const [MyNotificationsNum,setNMyNotificationsNum]=useState(0)
   const handleProfileMenuOpen = (event) => {
@@ -120,71 +123,24 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {user && (
-        <Link to={`/user/${user.id}`}>
-          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <Stack>
+        <Link style={{textDecoration:'none',color:'black'}} to={`/user/${user.id}`}>
+          <Button>
+          <MenuItem sx={{fontSize:'15px'}} onClick={handleMenuClose}>profile</MenuItem>
+          </Button>
         </Link>
+        <Button onClick={()=>{
+          setUser(null)
+          JwtService.destroyToken()
+        }}>
+        LOG OUT
+        </Button>
+        </Stack>
       )}
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton
-          onClick={() => {
-            setOpenCart(true);
-          }}
-          size='large'
-          aria-label='show 4 new mails'
-          color='inherit'
-        >
-          <Badge badgeContent={countCart} color='error'>
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size='large'
-          aria-label='show 17 new notifications'
-          color='inherit'
-        >
-          <Notifications 
-          setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
-           MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size='large'
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+ 
   return (
     <Box position='relative' zIndex='2'>
       <AppBar
@@ -251,24 +207,20 @@ export default function PrimarySearchAppBar() {
               
               </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                  size='large'
-                  aria-label='show more'
-                  aria-controls={mobileMenuId}
-                  aria-haspopup='true'
-                  onClick={handleMobileMenuOpen}
-                  color='inherit'
-                >
-                  <MoreIcon />
-                </IconButton>
+              <MenuItems setNMyNotifications={setNMyNotifications}
+               setMyNotificationsNum={setNMyNotificationsNum}
+        countCart={countCart} 
+            MyNotificationsNum={MyNotificationsNum}
+            id={user.id}
+             MyNotifications={MyNotifications}/>
               </Box>
             </Box>
           )}
           {!user && <SignForms />}
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
+
     </Box>
   );
 }

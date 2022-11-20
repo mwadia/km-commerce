@@ -10,7 +10,7 @@ getToken:() =>{
   },
 
  destroyToken:()=> {
-    return localStorage.removeItem(this.tokenName);
+    return localStorage.removeItem(tokenName);
   }
 }
 
