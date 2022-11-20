@@ -10,7 +10,7 @@ function UserInfo({userInfo,paramsId,userProducts,setUserProducts}) {
   return (
     <Container sx={{background:{sm:'#f5f0f0',xs:'none'},padding:'70px 0',minHeight:{sm:'100vh',xs:'0'},position:'relative',top:'-10vh',zIndex:'1',right:{sm:'-2vw',xs:'0'}}} maxWidth='xs'>
       <Stack width='100%' gap='20px' alignItems='center'>
-        <Box position='relative' sx borderRadius='50%'>
+        <Box position='relative'  borderRadius='50%'>
         <Avatar sx={{width:'200px',height:'200px'}} src={userInfo.userImg}/>
         </Box>
       <Typography variant='h3'>{userInfo.name}</Typography>

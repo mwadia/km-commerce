@@ -12,7 +12,7 @@ import UploadImgBtn from './UploadImgBtn';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
-
+import SignUpValid from '../../../validation/SignUp';
 import { Store } from '../../Storage';
 import Apiservices from '../../../services/ApiServices';
 import JwtService from '../../../services/TokenServices';
@@ -30,6 +30,7 @@ function SignUp({ setLoading }) {
     name: '',
     email: '',
     password: '',
+    confirmPassword:'',
     userImg: '',
   });
   const [imgFile, setImgFile] = useState('');
@@ -44,28 +45,38 @@ function SignUp({ setLoading }) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handelSignUp = (e) => {
-    e.preventDefault();
-    const newData = new FormData();
-    newData.append('file', imgFile);
-    newData.append('data', JSON.stringify(signUp));
-    setLoading(true);
-    Apiservices({
-      method: 'post',
-      url: '/signup',
-      data: newData,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    }).then((isExist) => {
-      JwtService.setToken(isExist.data.data.token)
-      setLoading(false);
-      if (isExist.data.data) {
-        setUser(isExist.data.data);
-        toast.success(isExist.data.msg);
-        setOpen(false);
-      } else {
-        toast.error(isExist.data.msg);
+  const handelSignUp = async(e) => {
+    try{
+      e.preventDefault();
+      if(imgFile){
+      const validated = await SignUpValid.validate(signUp);
+      const newData = new FormData();
+      newData.append('file', imgFile);
+      newData.append('data', JSON.stringify(validated));
+      setLoading(true);
+      Apiservices({
+        method: 'post',
+        url: '/signup',
+        data: newData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }).then((isExist) => {
+        JwtService.setToken(isExist.data.data.token)
+        setLoading(false);
+        if (isExist.data.data) {
+          setUser(isExist.data.data);
+          toast.success(isExist.data.msg);
+          setOpen(false);
+        } else {
+          toast.error(isExist.data.msg);
+        }
+      });  }else{
+        toast.error('please add your image');
+
       }
-    });
+    }catch (err) {
+      toast.error((err).message);
+    }
+    
   };
 
   return (
@@ -116,8 +127,8 @@ function SignUp({ setLoading }) {
           <Input
             id='standard-adornment-password'
             type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={(e) => setValues({ ...values, password: e.target.value })}
+            value={signUp.confirmPassword}
+          onChange={(e) => setSignUp({ ...signUp, confirmPassword: e.target.value })}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton

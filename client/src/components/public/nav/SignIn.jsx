@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { Store } from '../../Storage';
 import Apiservices from '../../../services/ApiServices';
 import JwtService from '../../../services/TokenServices';
+import SignInValid from '../../../validation/SignIn';
 function SignIn({ setLoading }) {
   const { setUser, setOpen } = useContext(Store);
   const [signin, setSignIn] = useState({
@@ -29,20 +30,27 @@ function SignIn({ setLoading }) {
     showPassword: false,
   });
 
-  const handelSignIn = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    Apiservices.post('/signin', signin).then((res) => {
-      setLoading(false);
-      if (res.data.data) {
-        JwtService.setToken(res.data.data.token)
-        setUser(res.data.data);
-        toast.success(res.data.msg);
-        setOpen(false);
-      } else {
-        toast.error(res.data.msg);
-      }
-    });
+  const handelSignIn =async (e) => {
+    try{
+      e.preventDefault();
+      const validated = await SignInValid.validate(signin);
+
+      setLoading(true);
+      Apiservices.post('/signin', validated).then((res) => {
+        setLoading(false);
+        if (res.data.data) {
+          JwtService.setToken(res.data.data.token)
+          setUser(res.data.data);
+          toast.success(res.data.msg);
+          setOpen(false);
+        } else {
+          toast.error(res.data.msg);
+        }
+      });
+    }catch (err) {
+      toast.error((err).message);
+    }
+    
   };
 
   const handleClickShowPassword = () => {

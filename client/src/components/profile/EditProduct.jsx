@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,6 +13,8 @@ import { Stack ,Box} from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Apiservices from '../../services/ApiServices';
+import { toast } from 'react-toastify';
+import ProductValid from '../../validation/Product';
 
 export default function EditProduct({item,setNewItem}) {
   const { id} = item;
@@ -35,27 +36,34 @@ export default function EditProduct({item,setNewItem}) {
     {...newProduct,category: event.target.value} 
     );
   };
-const handelNewProduct=(e)=>{
-  e.preventDefault();
-  const newData = new FormData();
-  if(imgFile){
-    newData.append('file', imgFile);
-  }
-  newData.append('data', JSON.stringify(newProduct));
-  setLoading(true)
-  Apiservices({
-    method: 'put',
-    url: `/editproduct/${id}`,
-    data: newData,
-    headers: { 'Content-Type': 'multipart/form-data' },
-  }).then((isExist) => {
-    setLoading(false)
-    if (isExist.data.data) {
-      setNewItem(isExist.data.data)
-      setOpen(false)
-      setImgFile('')
+const handelNewProduct=async(e)=>{
+  try{
+    e.preventDefault();
+    const validated = await ProductValid.validate(newProduct);
+
+    const newData = new FormData();
+    if(imgFile){
+      newData.append('file', imgFile);
     }
-  })
+    newData.append('data', JSON.stringify(validated));
+    setLoading(true)
+    Apiservices({
+      method: 'put',
+      url: `/editproduct/${id}`,
+      data: newData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((isExist) => {
+      setLoading(false)
+      if (isExist.data.data) {
+        setNewItem(isExist.data.data)
+        setOpen(false)
+        setImgFile('')
+      }
+    })
+  }catch (err) {
+    toast.error((err).message);
+  }
+  
   ;}
 
 

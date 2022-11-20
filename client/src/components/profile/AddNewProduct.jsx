@@ -12,6 +12,9 @@ import SignInBtn from '../public/nav/SignInBtn';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Stack ,Box} from '@mui/system';
 import Apiservices from '../../services/ApiServices';
+import { toast } from 'react-toastify';
+import ProductValid from '../../validation/Product';
+
 export default function AddNewProduct({userProducts,setUserProducts}) {
   const [open, setOpen] = React.useState(false);
   const [newProduct, setNewProduct] = React.useState({
@@ -36,32 +39,43 @@ category: ""
     {...newProduct,category: event.target.value} 
     );
   };
-const handelNewProduct=(e)=>{
-  e.preventDefault();
-  const newData = new FormData();
-  newData.append('file', imgFile);
-  newData.append('data', JSON.stringify(newProduct));
-  setLoading(true)
-  Apiservices({
-    method: 'post',
-    url: '/addnewproduct',
-    data: newData,
-    headers: { 'Content-Type': 'multipart/form-data' },
-  }).then((isExist) => {
-    setLoading(false)
-    if (isExist.data.data) {
-      setUserProducts([isExist.data.data,...userProducts])
-      setOpen(false)
-    setNewProduct({
-        id: 0,
-    name: "",
-    price: '',
-    count: '',
-    category: ""
+const handelNewProduct=async(e)=>{
+  try{
+    e.preventDefault();
+
+    if(imgFile){
+      const validated = await ProductValid.validate(newProduct);
+      const newData = new FormData();
+      newData.append('file', imgFile);
+      newData.append('data', JSON.stringify(validated));
+      setLoading(true)
+      Apiservices({
+        method: 'post',
+        url: '/addnewproduct',
+        data: newData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }).then((isExist) => {
+        setLoading(false)
+        if (isExist.data.data) {
+          setUserProducts([isExist.data.data,...userProducts])
+          setOpen(false)
+        setNewProduct({
+            id: 0,
+        name: "",
+        price: '',
+        count: '',
+        category: ""
+          })
+          setImgFile('')
+        }
       })
-      setImgFile('')
+    }else{
+      toast.error('please add image!!');
     }
-  })
+  }catch (err) {
+    toast.error((err).message);
+  }
+ 
   ;}
 
 

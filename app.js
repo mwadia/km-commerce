@@ -14,12 +14,12 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 app.use(cors({
-  origin: ["*",'http://localhost:3000'],
+  origin: ["*",'http://localhost:3000','https://classy-puffpuff-258b7c.netlify.app'],
   credentials: true
 }))
 const io = new Server(server,{
   cors:{
-    origin:["*",'http://localhost:3000'],
+    origin:["*",'http://localhost:3000','https://classy-puffpuff-258b7c.netlify.app'],
     methods:["GET","POST","DELETE"]
   }
 })
