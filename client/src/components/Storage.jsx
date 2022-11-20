@@ -34,6 +34,7 @@ function Storage(props) {
       });
     }
   }, [user, openCart]);
+  console.log(process.env.REACT_APP_BASE_URL);
   return (
     <div>
       <Store.Provider
