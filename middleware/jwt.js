@@ -16,8 +16,11 @@ const jwtFun = (info, res) => {
   });
 };
 const auth = (req, res, next) => {
+  let token
+if(req.header('Authorization')){
+   token  = req.header('Authorization').split(' ')[1];
 
-  const token  = req.header('Authorization').split(' ')[1];
+}
   jwt.verify(token, process.env.SECRET_KEY, (err, data) => {
     if (!err) {
       req.user = {
