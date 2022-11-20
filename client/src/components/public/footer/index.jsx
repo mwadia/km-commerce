@@ -10,8 +10,9 @@ function index() {
       padding='20px 0'
       sx={{ background: '#f0e9dd' }}
       flexWrap='wrap-reverse'
-      direction='row'
+      direction={{ sm: 'row', xs: 'column-reverse' }}
       justifyContent='space-around'
+      gap={'20px'}
       alignItems='center'
     >
       <Stack>
@@ -67,8 +68,11 @@ function index() {
             Mohmmed AlWadia & Mohmmed AlShorafa
           </Typography>
         </Box>
-      </Stack> 
-       <img style={{ maxWidth: '120px' }} src='./saas/logo.png' />
+      </Stack>
+      <img
+        style={{ maxWidth: '120px' }}
+        src='http://res.cloudinary.com/dhqwirard/image/upload/v1668943983/vr0c1ekgs3diurgniocm.png'
+      />
     </Stack>
   );
 }

@@ -9,7 +9,7 @@ const userImg=req.fileUrl
     where: { email: email },
   });
   if (isUser) {
-    res.json({ msg: 'the acount is exist' });
+    res.json({ msg: 'acount is exist' });
   } else {
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = await User.create({
@@ -32,7 +32,7 @@ const signIn = async (req, res) => {
     where: { email: email },
   });
   if (!isUser) {
-    res.json({ msg: 'the email is not exist' });
+    res.json({ msg: 'email is not exist' });
   } else {
     const isPassword = await bcrypt.compare(password,isUser.password);
     if (isPassword) {
@@ -45,7 +45,7 @@ const signIn = async (req, res) => {
         res
       );
     } else {
-      res.json({ msg: 'password is wrong' });
+      res.json({ msg: 'password is wrong!' });
     }
   }
 };
@@ -71,7 +71,7 @@ const editUser=async (req,res)=>{
       res
     );
   }else{
-    res.json({msg:'password is wrong!!'})
+    res.json({msg:'password is wrong!'})
 
   }
 }
@@ -82,7 +82,7 @@ const getuser=async(req,res)=>{
     res.json({data:user})
   }catch (err) {
     res.status(400).json({
-      msg: 'something went wrong',
+      msg: 'something went wrong!',
       err,
     });
   }

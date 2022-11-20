@@ -6,7 +6,7 @@ import { Store } from '../../Storage';
 export default function FilterTabs() {
   const [value, setValue] = React.useState(0);
   const { filter, SetFilter } = React.useContext(Store);
-  const catogory = ['', 'Man', 'Woman', 'Chaild'];
+  const catogory = ['', 'zalma', 'Woman', 'Chaild'];
   const handleChange = (event, newValue) => {
     setValue(newValue);
     SetFilter({ ...filter, c: catogory[newValue] });

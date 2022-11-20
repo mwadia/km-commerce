@@ -8,43 +8,39 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import Apiservices from '../../services/ApiServices';
-export default function DeleteMsg({id,setUserProducts,userProducts}) {
+export default function DeleteMsg({ id, setUserProducts, userProducts }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-
   const handleClose = () => {
     setOpen(false);
   };
-const handelDelete=()=>{
-  Apiservices.delete(`/destroyproduct/${id}`)
-  setUserProducts(userProducts.filter(e=>e.id!==id))
-  setOpen(false);
-
-}
+  const handelDelete = () => {
+    Apiservices.delete(`/destroyproduct/${id}`);
+    setUserProducts(userProducts.filter((e) => e.id !== id));
+    setOpen(false);
+  };
   return (
     <div>
-      <IconButton variant="outlined" onClick={handleClickOpen}>
-        <DeleteIcon/>
+      <IconButton variant='outlined' onClick={handleClickOpen}>
+        <DeleteIcon sx={{ color: 'black' }} />
       </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Delete Product"}
-        </DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{'Delete Product'}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          Are you sure to delete this product?
+          <DialogContentText id='alert-dialog-description'>
+            Are you sure you want to delete this product?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  onClick={handelDelete}>Delete</Button>
+          <Button onClick={handelDelete}>Delete</Button>
           <Button onClick={handleClose} autoFocus>
             Cancel
           </Button>

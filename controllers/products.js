@@ -61,10 +61,10 @@ const addNewProduct=async(req,res)=>{
     const {name,price,count,category}=JSON.parse(req.body.data)
     UserId=req.user.id
     const newProduct=await Product.create({name,price,count,productImg,category,UserId})
-    res.json({data:newProduct,msg:'add new product is succuss!'});
+    res.json({data:newProduct,msg:'product added successfully'});
   }catch(err){
     res.status(400).json({
-      msg: 'something went wrong',
+      msg: 'something went wrong!',
       err,
     });
   }
@@ -75,10 +75,10 @@ const editProduct=async (req,res)=>{
     const {name,price,count,category,productImg}=JSON.parse(req.body.data)
     let newImg=req.fileUrl ||productImg
     await Product.update({name,price,count,category,productImg:newImg},{where:req.params})
-    res.json({data:{...JSON.parse(req.body.data),productImg:newImg||productImg},msg:'edit the product is succuss!'})   
+    res.json({data:{...JSON.parse(req.body.data),productImg:newImg||productImg},msg:'product edited successfully'})   
   }catch(err){
     res.status(400).json({
-      msg: 'something went wrong',
+      msg: 'something went wrong!',
       err,
     });
   }
@@ -94,10 +94,10 @@ const dstroyProduct=async(req,res)=>{
    
     console.log(req.params.id);
 
-    res.json({msg:'deleted this product is succuss!'})
+    res.json({msg:'product deleted successfully'})
   }catch(err){
     res.status(400).json({
-      msg: 'something went wrong',
+      msg: 'something went wrong!',
       err,
     });
   }

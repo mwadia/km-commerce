@@ -9,12 +9,21 @@ body {
   overflow-x: hidden;
 }
 
-.owner .MuiFab-root {
+.navbarMobile .owner .MuiFab-root {
   min-height: 0;
   min-width: none;
   width: 25px;
   padding: 20px;
   height: 25px;
-  background-color: rgba(170, 166, 148, 0.692);
-  color: rgb(235, 220, 85);
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+.product .owner .MuiFab-root {
+  min-height: 0;
+  min-width: none;
+  width: 25px;
+  box-shadow: none;
+  height: 25px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(3, 3, 3);
 }

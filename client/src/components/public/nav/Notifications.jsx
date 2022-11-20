@@ -10,15 +10,22 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import Apiservices from '../../../services/ApiServices';
 import { Store } from '../../Storage';
-export default function Notifications({MyNotifications,MyNotificationsNum,setNMyNotifications,setMyNotificationsNum}) {
+export default function Notifications({
+  MyNotifications,
+  MyNotificationsNum,
+  setNMyNotifications,
+  setMyNotificationsNum,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {token}=React.useContext(Store)
+  const { token } = React.useContext(Store);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    Apiservices.get('/getnotifications',{token:token}).then(res=>setNMyNotifications(res.data.data))
-    Apiservices.delete('/destroyallaotifications',{token:token})
-    setMyNotificationsNum(0)
+    Apiservices.get('/getnotifications', { token: token }).then((res) =>
+      setNMyNotifications(res.data.data)
+    );
+    Apiservices.delete('/destroyallaotifications', { token: token });
+    setMyNotificationsNum(0);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -26,23 +33,23 @@ export default function Notifications({MyNotifications,MyNotificationsNum,setNMy
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
- 
-        <Tooltip title="Account settings">
+        <Tooltip>
           <IconButton
             onClick={handleClick}
-            size="small"
+            size='small'
             aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
+            aria-haspopup='true'
             aria-expanded={open ? 'true' : undefined}
           >
-                              <Badge badgeContent={MyNotificationsNum} color='error'>
-
-<NotificationsIcon sx={{color:'#ffff'}}/>  </Badge>        </IconButton>
+            <Badge badgeContent={MyNotificationsNum} color='error'>
+              <NotificationsIcon sx={{ color: '#ffff' }} />{' '}
+            </Badge>{' '}
+          </IconButton>
         </Tooltip>
       </Box>
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        id='account-menu'
         open={open}
         onClose={handleClose}
         onClick={handleClose}
@@ -75,12 +82,15 @@ export default function Notifications({MyNotifications,MyNotificationsNum,setNMy
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        
-    {MyNotifications &&MyNotifications.map((e,i)=><><MenuItem sx={{fontSize:'15px',color:'#424040'}} key={i} >
-      {e.massage}
-    </MenuItem>
-    <Divider variant="middle"/>
-    </>)}
+        {MyNotifications &&
+          MyNotifications.map((e, i) => (
+            <>
+              <MenuItem sx={{ fontSize: '15px', color: '#424040' }} key={i}>
+                {e.massage}
+              </MenuItem>
+              <Divider variant='middle' />
+            </>
+          ))}
       </Menu>
     </React.Fragment>
   );

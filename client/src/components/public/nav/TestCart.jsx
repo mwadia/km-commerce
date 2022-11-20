@@ -50,6 +50,7 @@ export default function TestCart({ item }) {
       direction={{ sm: 'row', xs: 'column' }}
       alignItems={{ sm: 'center' }}
       gap='40px'
+      margin= '10px 0'
     >
       <Avatar
         sx={{

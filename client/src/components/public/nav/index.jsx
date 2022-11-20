@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import {Box,Stack} from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
@@ -9,22 +9,21 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import AvatarNav from './AvatarNav';
 import SignForms from './SignForms';
 import { Store } from '../../Storage';
-import {useEffect,useState} from 'react';
+import { useEffect, useState } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartPopUp from './CartPopUp';
-import io from "socket.io-client";
+import io from 'socket.io-client';
 import Notifications from './Notifications';
 import Apiservices from '../../../services/ApiServices';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuItems from './MenuItems';
 import JwtService from '../../../services/TokenServices';
-const socket=io.connect(process.env.REACT_APP_BASE_URL)
+const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,16 +65,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const { user, setOpenCart } = React.useContext(Store);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { filter, SetFilter, countCart,setUser } = React.useContext(Store);
-  const [MyNotifications,setNMyNotifications]=useState([])
-  const [MyNotificationsNum,setNMyNotificationsNum]=useState(0)
+  const { filter, SetFilter, countCart, setUser } = React.useContext(Store);
+  const [MyNotifications, setNMyNotifications] = useState([]);
+  const [MyNotificationsNum, setNMyNotificationsNum] = useState(0);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -92,15 +90,17 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  useEffect(()=>{
-    Apiservices.get('/getnotifications').then(res=>setNMyNotificationsNum(res.data.data.length))
-  },[])
-  socket.on('notification', function(msg) {
-    if(user){
-      let noti= msg.data.filter(e=>e===user.id)
-      setNMyNotificationsNum(MyNotificationsNum+noti.length)
+  useEffect(() => {
+    Apiservices.get('/getnotifications').then((res) =>
+      setNMyNotificationsNum(res.data.data.length)
+    );
+  }, []);
+  socket.on('notification', function (msg) {
+    if (user) {
+      let noti = msg.data.filter((e) => e === user.id);
+      setNMyNotificationsNum(MyNotificationsNum + noti.length);
     }
-    });
+  });
   const handelSarech = (e) => {
     SetFilter({ ...filter, q: e.target.value });
   };
@@ -124,29 +124,39 @@ export default function PrimarySearchAppBar() {
     >
       {user && (
         <Stack>
-        <Link style={{textDecoration:'none',color:'black'}} to={`/user/${user.id}`}>
-          <Button>
-          <MenuItem sx={{fontSize:'15px'}} onClick={handleMenuClose}>profile</MenuItem>
+          <Link
+            style={{ textDecoration: 'none', color: 'black' }}
+            to={`/user/${user.id}`}
+          >
+            <Button>
+              <MenuItem sx={{ fontSize: '15px' }} onClick={handleMenuClose}>
+                profile
+              </MenuItem>
+            </Button>
+          </Link>
+          <Button
+            onClick={() => {
+              setUser(null);
+              JwtService.destroyToken();
+            }}
+          >
+            LOG OUT
           </Button>
-        </Link>
-        <Button onClick={()=>{
-          setUser(null)
-          JwtService.destroyToken()
-        }}>
-        LOG OUT
-        </Button>
         </Stack>
       )}
     </Menu>
   );
 
- 
   return (
-    <Box position='relative' zIndex='2'>
+    <Box
+      position='relative'
+      sx={{ background: 'black', width: '100%' }}
+      zIndex='2'
+    >
       <AppBar
         position='static'
         sx={{
-          background: '#576238',
+          background: 'black',
           boxShadow: 'rgba(17, 17, 26, 0.1) 0px 1px 0px',
         }}
       >
@@ -155,14 +165,11 @@ export default function PrimarySearchAppBar() {
             <Box
               sx={{ maxWidth: '100px', marginRight: { xs: '15px', sm: '0' } }}
             >
-              <img
-                src='./saas/logo-nav.png'
-                style={{ width: '100%' }}
-              />
+              <img src='http://res.cloudinary.com/dhqwirard/image/upload/v1668944074/iyesrikd8btlew4elxnh.png' style={{ width: '100%' }} />
             </Box>
           </Link>
 
-          <Search>
+          <Search sx={{ width: { sm: 'auto', xs: '70%' } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -183,16 +190,18 @@ export default function PrimarySearchAppBar() {
               >
                 <CartPopUp countCart={countCart} />
 
-             
-                  <Notifications
-                  setNMyNotifications={setNMyNotifications} setMyNotificationsNum={setNMyNotificationsNum}
-                   MyNotificationsNum={MyNotificationsNum} MyNotifications={MyNotifications}/>
-                   <Link to='home'>
-                   <IconButton>
-                  <HomeIcon sx={{color:'#ffff'}}/>
-                </IconButton>
-                   </Link>
-                     
+                <Notifications
+                  setNMyNotifications={setNMyNotifications}
+                  setMyNotificationsNum={setNMyNotificationsNum}
+                  MyNotificationsNum={MyNotificationsNum}
+                  MyNotifications={MyNotifications}
+                />
+                <Link to='home'>
+                  <IconButton>
+                    <HomeIcon sx={{ color: '#ffff' }} />
+                  </IconButton>
+                </Link>
+
                 <IconButton
                   size='large'
                   edge='end'
@@ -204,15 +213,19 @@ export default function PrimarySearchAppBar() {
                 >
                   <AvatarNav user={user} />
                 </IconButton>
-              
               </Box>
-              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <MenuItems setNMyNotifications={setNMyNotifications}
-               setMyNotificationsNum={setNMyNotificationsNum}
-        countCart={countCart} 
-            MyNotificationsNum={MyNotificationsNum}
-            id={user.id}
-             MyNotifications={MyNotifications}/>
+              <Box
+                className='navbarMobile'
+                sx={{ display: { xs: 'flex', md: 'none' } }}
+              >
+                <MenuItems
+                  setNMyNotifications={setNMyNotifications}
+                  setMyNotificationsNum={setNMyNotificationsNum}
+                  countCart={countCart}
+                  MyNotificationsNum={MyNotificationsNum}
+                  id={user.id}
+                  MyNotifications={MyNotifications}
+                />
               </Box>
             </Box>
           )}
@@ -220,7 +233,6 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {renderMenu}
-
     </Box>
   );
 }

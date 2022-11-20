@@ -8,21 +8,41 @@ import Apiservices from '../services/ApiServices';
 
 function Profile({ setShowNav }) {
   const paramsId = useParams().id;
-  const {openCart}=useContext(Store)
-  const [userProducts,setUserProducts]=useState([])
-  const [userInfo,setUserInfo]=useState({})
+  const { openCart } = useContext(Store);
+  const [userProducts, setUserProducts] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     setShowNav(true);
-    Apiservices.get(`/getuser/${paramsId}`).then(res=>setUserInfo(res.data.data))
+    Apiservices.get(`/getuser/${paramsId}`).then((res) =>
+      setUserInfo(res.data.data)
+    );
   }, []);
   useEffect(() => {
-    Apiservices.get(`/allproducts/${paramsId}`).then((res) =>{ 
-      setUserProducts(res.data)});
+    Apiservices.get(`/allproducts/${paramsId}`).then((res) => {
+      setUserProducts(res.data);
+    });
   }, [openCart]);
-  return <Stack sx={{width:{sm:'100%'},minHeight:{sm:'90vh',xs:'0'}}} direction={{sm:'row',xs:'column-reverse'}} justifyContent='space-between'>
-    <UserProducts setUserProducts={setUserProducts} userProducts={userProducts}/>
-  <UserInfo userProducts={userProducts} setUserProducts={setUserProducts} paramsId={paramsId} userInfo={userInfo}/>
-  </Stack>;
+  return (
+    <Stack
+      sx={{
+        width: { sm: '100%' },
+        minHeight: { sm: '90vh', xs: '0' },
+      }}
+      direction={{ sm: 'row', xs: 'column-reverse' }}
+      justifyContent='space-between'
+    >
+      <UserProducts
+        setUserProducts={setUserProducts}
+        userProducts={userProducts}
+      />
+      <UserInfo
+        userProducts={userProducts}
+        setUserProducts={setUserProducts}
+        paramsId={paramsId}
+        userInfo={userInfo}
+      />
+    </Stack>
+  );
 }
 
 export default Profile;

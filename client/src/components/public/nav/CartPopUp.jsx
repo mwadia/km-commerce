@@ -9,6 +9,7 @@ import {
   Divider,
   IconButton,
   Typography,
+  Box,
 } from '@mui/material';
 import { useContext } from 'react';
 import { Store } from '../../Storage';
@@ -17,9 +18,9 @@ import TestCart from './TestCart';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import io from "socket.io-client";
+import io from 'socket.io-client';
 import Apiservices from '../../../services/ApiServices';
-const socket=io.connect(process.env.REACT_APP_BASE_URL)
+const socket = io.connect(process.env.REACT_APP_BASE_URL);
 export default function CartPopUp({ countCart }) {
   const {
     cartProduct,
@@ -28,14 +29,15 @@ export default function CartPopUp({ countCart }) {
     total,
     setTotal,
     setCartProduct,
-    SetCountCart
+    SetCountCart,
   } = useContext(Store);
   const handleClickOpen = () => {
     Apiservices.get('/getcartproduct').then((res) => {
       setCartProduct(res.data.data);
       SetCountCart(res.data.data.length);
-        setTotal(res.data.data.reduce((a,b)=>
-          a +(b.Product.price*b.count),0))
+      setTotal(
+        res.data.data.reduce((a, b) => a + b.Product.price * b.count, 0)
+      );
     });
     setOpenCart(true);
   };
@@ -49,11 +51,12 @@ export default function CartPopUp({ countCart }) {
     setCartProduct([]);
   };
   const handelBuy = () => {
-    Apiservices.put('/buyproducts', { total: total }).then((res) =>{
-      toast.success('done')
-      socket.emit('notification',{data:cartProduct.map(e=>e=e.Product.UserId)});
-}
-    );
+    Apiservices.put('/buyproducts', { total: total }).then((res) => {
+      toast.success('pursued done!');
+      socket.emit('notification', {
+        data: cartProduct.map((e) => (e = e.Product.UserId)),
+      });
+    });
     setTotal(0);
     setCartProduct([]);
   };
@@ -77,20 +80,19 @@ export default function CartPopUp({ countCart }) {
         onClose={handleClose}
       >
         <Stack
-          p={{ sm: 1, xs: 0 }}
-          alignItems='center'
+          p={{ sm: 0, xs: 0 }}
           justifyContent={{ sm: 'space-between', xs: 'center' }}
           direction={{ sm: 'row', xs: 'column' }}
+          sx={{ height: '100%' }}
         >
-          <Container maxWidth='md' sx={{ p: 0, m: 0 }}>
+          <Container maxWidth='md' sx={{ p: 0, m: 0, minHeight: '250px' }}>
             <Stack
-              gap='20px'
               direction={{ sm: 'column', xs: 'row' }}
               flexWrap={{ xs: 'wrap' }}
               justifyContent={{ xs: 'center' }}
             >
               {cartProduct.map((item) => (
-                <Stack key={item.id} gap='5px'>
+                <Stack key={item.id}>
                   <TestCart item={item} />
                   <Divider />
                 </Stack>
@@ -98,16 +100,37 @@ export default function CartPopUp({ countCart }) {
             </Stack>
           </Container>
           <Divider orientation='vertical' flexItem />
-
-          <Stack
-            direction={{ xs: 'row', sm: 'column' }}
+          <Box
+            width={{ xs: '100%', sm: '300px' }}
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
           >
-            <Typography textAlign='center' variant='h6'>
-              Total:${total}
-            </Typography>
-            <Button onClick={handelDeletedAll}>delete all items</Button>
-            <Button onClick={handelBuy}>buy</Button>
-          </Stack>
+            <Stack
+              direction={{ xs: 'row', sm: 'column' }}
+              justifyContent={{ sm: 'center', xs: 'space-around' }}
+              alignItems='center'
+              sx={{
+                background: '#f5f5f58a',
+                height: '100%',
+                width: '100%',
+              }}
+            >
+              <Typography textAlign='center' variant='h6'>
+                Total: $ {total}
+              </Typography>
+
+              <Button
+                sx={{ background: '#ededed', margin: '15px 0' }}
+                onClick={handelBuy}
+              >
+                buy
+              </Button>
+              <Button sx={{ background: '#ededed' }} onClick={handelDeletedAll}>
+                delete all items
+              </Button>
+            </Stack>
+          </Box>
         </Stack>
       </Dialog>
     </React.Fragment>
