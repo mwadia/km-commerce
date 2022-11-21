@@ -17,6 +17,7 @@ const jwtFun = (info, res) => {
 };
 const auth = (req, res, next) => {
   let token
+  console.log(req.header('Authorization'));
 if(req.header('Authorization')){
    token  = req.header('Authorization').split(' ')[1];
 
