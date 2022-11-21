@@ -27,7 +27,7 @@ export default function Product({ item, setUserProducts, userProducts }) {
     } else {
       SetIsCart(false);
     }
-  }, [cartProduct, openCart]);
+  }, [cartProduct]);
   const handelAddtoCart = () => {
     if (isCart) {
       Apiservices.delete(`/destroyoneproductcart/${id}`).then((res) =>
