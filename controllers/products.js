@@ -58,9 +58,12 @@ const allProducts=await Product.findAll({where:{UserId:req.params.id},order: [
 const addNewProduct=async(req,res)=>{
   try{
     let productImg=req.fileUrl
+    console.log(productImg,'body:',JSON.parse(req.body.data));
     const {name,price,count,category}=JSON.parse(req.body.data)
     UserId=req.user.id
+    console.log(UserId);
     const newProduct=await Product.create({name,price,count,productImg,category,UserId})
+    console.log(newProduct);
     res.json({data:newProduct,msg:'product added successfully'});
   }catch(err){
     res.status(400).json({
