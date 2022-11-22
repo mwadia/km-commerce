@@ -169,7 +169,7 @@ export default function PrimarySearchAppBar() {
             </Box>
           </Link>
 
-          <Search sx={{ width: { sm: 'auto', xs: '70%' } }}>
+          <Search sx={{ width: { sm: 'auto', xs: '54%' } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

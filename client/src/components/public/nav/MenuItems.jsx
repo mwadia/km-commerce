@@ -71,7 +71,7 @@ export default function MenuItems({
         <StyledSpeedDial
           ariaLabel='SpeedDial playground example'
           hidden={false}
-          icon={<MoreVertIcon />}
+          icon={<MoreVertIcon  />}
           direction={'down'}
         >
           {actions.map((action) => (

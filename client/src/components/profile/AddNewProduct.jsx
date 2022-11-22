@@ -138,9 +138,9 @@ export default function AddNewProduct({ userProducts, setUserProducts }) {
                   id: 'max-width',
                 }}
               >
-                <MenuItem value='xs'>Man</MenuItem>
-                <MenuItem value='sm'>Woman</MenuItem>
-                <MenuItem value='md'>Chaild</MenuItem>
+                <MenuItem value='zalma'>Man</MenuItem>
+                <MenuItem value='woman'>Woman</MenuItem>
+                <MenuItem value='chaild'>Chaild</MenuItem>
               </Select>
             </FormControl>
             <UploadImgBtn setImgFile={setImgFile} />
