@@ -140,7 +140,7 @@ export default function AddNewProduct({ userProducts, setUserProducts }) {
               >
                 <MenuItem value='zalma'>Man</MenuItem>
                 <MenuItem value='woman'>Woman</MenuItem>
-                <MenuItem value='chaild'>Chaild</MenuItem>
+                <MenuItem value='chaild'>Child</MenuItem>
               </Select>
             </FormControl>
             <UploadImgBtn setImgFile={setImgFile} />

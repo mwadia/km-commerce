@@ -21,7 +21,7 @@ export default function FilterTabs() {
       <Tab label='All' />
       <Tab label='Man' />
       <Tab label='Woman' />
-      <Tab label='Chaild' />
+      <Tab label='Child' />
     </Tabs>
   );
 }
