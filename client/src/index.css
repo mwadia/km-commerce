@@ -28,3 +28,13 @@ body {
   background-color: rgb(255, 255, 255);
   color: rgb(3, 3, 3);
 }
+.input-img input{
+  display: none;
+}
+.input-img label{
+  border: 1px solid #d8d8d8;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+}

@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@mui/material/styles';
 import Theme from './helper/Theme';
 import Profile from './pages/Profile';
+import Test from './components/Test';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -34,9 +35,13 @@ function App() {
           <Stack minHeight='100vh' justifyContent='space-between' gap='50px'>
             {showNav && <Nav />}
             <Routes>
-              <Route
+            <Route
                 path='/'
                 element={<LandingPage setShowNav={setShowNav} />}
+              />
+                 <Route
+                path='/test'
+                element={<Test setShowNav={setShowNav} />}
               />
               <Route path='/home' element={<Home setShowNav={setShowNav} />} />
               <Route

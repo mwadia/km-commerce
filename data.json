@@ -1,0 +1,17 @@
+{
+  "item":[
+    {
+      "name":"item1",
+      "price":50,
+      "description":"info about this product",
+      "image":{
+        "imageA":"item.jpg",
+        "imageB":"item.png"
+      },
+"category":{
+  "type":"Drink",
+  "section":"cold"
+}
+    }
+  ]
+}
